@@ -5,6 +5,7 @@ class Request
   field :client, type: String
   field :version, type: String
   field :overlay, type: String
+  validates :coords, :bounds, :client, presence: true
 
   def get_overlay
     bounds = {"bbox"=>self.bounds}.to_query
