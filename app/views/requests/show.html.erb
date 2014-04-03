@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Coords:</strong>
+  <%= @request.coords %>
+</p>
+
+<p>
+  <strong>Bounds:</strong>
+  <%= @request.bounds %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @request.client %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @request.version %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

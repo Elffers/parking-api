@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  coords: MyString
+  bounds: MyString
+  client: MyString
+  version: MyString
+
+two:
+  coords: MyString
+  bounds: MyString
+  client: MyString
+  version: MyString
