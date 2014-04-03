@@ -13,7 +13,7 @@ class Request
     image
   end
 
-  def client
+  def set_client(user_agent_string)
     ua = AgentOrange::UserAgent.new(user_agent_string)
     device = ua.device
     if device.is_mobile?
