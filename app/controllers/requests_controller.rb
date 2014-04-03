@@ -4,7 +4,7 @@ class RequestsController < ApplicationController
   # GET /requests
   # GET /requests.json
   def index
-    ua = AgentOrange::UserAgent.new(user_agent_string)
+
     raise
     @requests = Request.all
   end
@@ -27,6 +27,7 @@ class RequestsController < ApplicationController
   # POST /requests.json
   def create
     @request = Request.new(request_params)
+    @request.client(request.user_agent)
     @request.get_overlay
     # ua = AgentOrange::UserAgent.new(user_agent_string)
 

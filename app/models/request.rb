@@ -12,4 +12,17 @@ class Request
     # save the image somewhere else
     image
   end
+
+  def client
+    ua = AgentOrange::UserAgent.new(user_agent_string)
+    device = ua.device
+    if device.is_mobile?
+      self.client = device.platform
+      self.version = device.platform.version
+    else device.is_computer?
+      self.client = device.engine.browser.name
+      self.version = device.engine.browser.version
+    # elsif other conditions for not mobile or computer? BOT?
+    end
+  end
 end
