@@ -8,6 +8,16 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem "mongoid", git: 'git://github.com/mongoid/mongoid.git'
 gem 'httparty'
+gem 'agent_orange'
+
+group :development, :test do
+  gem "rspec-rails"
+  gem "guard-rspec"
+  gem "factory_girl_rails"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'simplecov', :require => false
+end
 
 group :doc do
   gem 'sdoc', require: false
