@@ -7,6 +7,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem "mongoid", git: 'git://github.com/mongoid/mongoid.git'
+gem 'httparty'
 
 group :doc do
   gem 'sdoc', require: false
