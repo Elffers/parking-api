@@ -8,8 +8,10 @@ class Request
   validates :coords, :bounds, :client, presence: true
 
   def get_overlay
-    bounds = {"bbox"=>self.bounds}.to_query
-    image = HTTParty.get("http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?#{bounds}&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image")
+    uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
+    query = request_params
+    image = HTTParty.get("#{uri}?#{query}")
+
     # img_file = Tempfile.new('overlay.png', "#{Rails.root.to_s}/public/", :encoding => 'ASCII-8BIT')
     filename = "overlays/#{Time.now.to_i}.png"
 
@@ -32,5 +34,18 @@ class Request
       self.version = device.engine.browser.version
     # elsif other conditions for not mobile or computer? BOT?
     end
+  end
+
+  def request_params
+    layer = 7
+    spatial_reference = 4326
+    {
+      "bbox"        => self.bounds,
+      "bboxSR"      => spatial_reference,
+      "layers"      => layer,
+      "format"      => "png",
+      "transparent" => "true",
+    }.to_query
+
   end
 end
