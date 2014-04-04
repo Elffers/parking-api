@@ -12,9 +12,9 @@ class Request
     image = HTTParty.get("http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?#{bounds}&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image")
     # img_file = Tempfile.new('overlay.png', "#{Rails.root.to_s}/public/", :encoding => 'ASCII-8BIT')
     data = Magick::Image.from_blob(image.parsed_response)
-    filename = "/overlays/#{Time.now.to_i}.png"
+    filename = "overlays/#{Time.now.to_i}.png"
 
-    img_file = File.new("#{Rails.root.to_s}/public/#{filename}", 'w', :encoding => 'ASCII-8BIT')
+    img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{filename}", 'w', :encoding => 'ASCII-8BIT')
 
     img_file.write(data[0])
     # save the image somewhere else
