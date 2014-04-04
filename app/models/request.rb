@@ -8,9 +8,12 @@ class Request
   validates :coords, :bounds, :client, presence: true
 
   def get_overlay
-    bounds = {"bbox"=>self.bounds}.to_query
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
-    image = HTTParty.get("#{uri}?#{bounds}&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=true&dpi=&time=&layerTimeOptions=&f=image")
+    bounds = {"bbox"=>self.bounds}.to_query
+    spatial_reference = "4326"
+    image = HTTParty.get("#{uri}?#{bounds}&bboxSR=#{spatial_reference}&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=true&dpi=&time=&layerTimeOptions=&f=image")
+
+    # http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=true&dpi=&time=&layerTimeOptions=&f=image
 
     filename = "overlays/#{Time.now.to_i}.png"
 
@@ -35,18 +38,20 @@ class Request
     end
   end
 
-  def request_params
-    # layer = 7
-    # spatial_reference = 4326
-    # {
-    #   "bbox"        => self.bounds,
-    #   "bboxSR"      => spatial_reference,
-    #   "layers"      => layer,
-    #   "format"      => "png",
-    #   "transparent" => "true",
-    # }.to_query
+#   def request_params
+#     layer = 7
+#     spatial_reference = 4326
+#     {
+#       "bbox"        => self.bounds,
+#       "bboxSR"      => spatial_reference,
+#       "layers"      => layer,
+#       "transparent" => "true",
+#       "format"      => "png",
+#     }.to_query
+# "bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&format=png&layers=7&transparent=true"
 
-    # "bbox=48.607765%2C-124.333297%2C48.609747%2C-124.331580&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image"
 
-  end
+# # "bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=true&dpi=&time=&layerTimeOptions=&f=image"
+
+#   end
 end
