@@ -11,14 +11,10 @@ class Request
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = request_params
     image = HTTParty.get("#{uri}?#{query}")
-
-    # img_file = Tempfile.new('overlay.png', "#{Rails.root.to_s}/public/", :encoding => 'ASCII-8BIT')
     filename = "overlays/#{Time.now.to_i}.png"
-
     img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{filename}", 'w', :encoding => 'ASCII-8BIT')
-
+    # TODO: save the image in S3 bucket
     img_file.write(image.parsed_response)
-    # save the image somewhere else
 
     self.overlay = filename
   end
