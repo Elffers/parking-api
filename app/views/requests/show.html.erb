@@ -16,14 +16,16 @@
 </p>
 
 <p>
+  <strong>Version:</strong>
+  <%= @request.version %>
+</p>
+
+<p>
   <strong>Overlay:</strong>
   <%= @request.overlay %>
 </p>
 
-<p>
-  <strong>Version:</strong>
-  <%= @request.version %>
-</p>
+<%=image_tag @request.overlay %>
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
 <%= link_to 'Back', requests_path %>

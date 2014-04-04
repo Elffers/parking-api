@@ -9,6 +9,7 @@ gem 'jbuilder', '~> 1.2'
 gem "mongoid", git: 'git://github.com/mongoid/mongoid.git'
 gem 'httparty'
 gem 'agent_orange'
+gem 'rmagick'
 
 group :development, :test do
   gem "rspec-rails"

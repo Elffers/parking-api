@@ -26,27 +26,13 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
-    # @request.get_overlay
+    @request.get_overlay
     respond_to do |format|
       if @request.save
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render action: 'show', status: :created, location: @request }
       else
         format.html { render action: 'new' }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /requests/1
-  # PATCH/PUT /requests/1.json
-  def update
-    respond_to do |format|
-      if @request.update(request_params)
-        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
     end

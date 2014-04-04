@@ -140,6 +140,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    rmagick (2.13.2)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -208,6 +209,7 @@ DEPENDENCIES
   jquery-rails
   mongoid!
   rails (= 4.0.3)
+  rmagick
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
