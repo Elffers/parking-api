@@ -51,7 +51,18 @@ class Request
 # "bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&format=png&layers=7&transparent=true"
 
 
-# # "bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png&transparent=true&dpi=&time=&layerTimeOptions=&f=image"
+
+dpi=96
+&transparent=true
+&format=png8
+&layers=show%3A7%2C5%2C6%2C8%2C9
+&bbox=1256880.4999999998%2C221219.3333333333%2C1301680.4999999998%2C233252.66666666663
+&bboxSR=2926
+&imageSR=2926
+&size=1344%2C361
+&f=image
+
+
 
 #   end
 end
