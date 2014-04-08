@@ -12,8 +12,7 @@ class Request
     query = self.request_params_to_query
     image = HTTParty.get("#{uri}?#{query}")
 
-    p image.inspect
-
+    # p image.inspect
     p "URI", "#{uri}?#{query}"
 
     filename = "overlays/#{Time.now.to_i}.png"
@@ -53,17 +52,5 @@ class Request
       "transparent" => "true",
     }.to_query
   end
-
-# this one works:
-# http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=47.607765%2C-122.333297%2C47.609747%2C-122.331580&bboxSR=4326&f=image&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true
-
-# {
-#     "bbox"=>"47.607765,-122.333297,47.609747,-122.331580",
-#     "bboxSR"=>"4326",
-#     "f"=>"image",
-#     "layers"=>"show:7,6,8,9",
-#     "size"=>nil,
-#     "transparent"=>"true"
-# }
 
 end
