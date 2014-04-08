@@ -45,6 +45,15 @@ GEM
       debug_inspector (>= 0.0.1)
     bson (2.2.1)
     builder (3.1.4)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-mongoid (0.7.1)
+      carrierwave (>= 0.8.0, < 0.11.0)
+      mongoid (>= 3.0, < 5.0)
+      mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     celluloid-io (0.15.0)
@@ -104,6 +113,9 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mongoid-grid_fs (2.1.0)
+      mime-types (>= 1.0, < 3.0)
+      mongoid (>= 3.0, < 5.0)
     mongoid-rspec (1.10.0)
       mongoid (>= 3.0.1)
       rake
@@ -204,6 +216,8 @@ DEPENDENCIES
   agent_orange
   better_errors
   binding_of_caller
+  carrierwave
+  carrierwave-mongoid
   coffee-rails (~> 4.0.0)
   factory_girl_rails
   guard-rspec
