@@ -9,7 +9,9 @@ gem 'jbuilder', '~> 1.2'
 gem "mongoid", git: 'git://github.com/mongoid/mongoid.git'
 gem 'httparty'
 gem 'agent_orange'
+
 gem 'carrierwave'
+gem "fog", "~> 1.3.1"
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
 group :development, :test do

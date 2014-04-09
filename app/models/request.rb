@@ -5,20 +5,18 @@ class Request
   field :client, type: String
   field :version, type: String
   field :overlay, type: String
+  field :url, type: String
   validates :coords, :bounds, :client, presence: true
+  # TODO: validation on coordinates being within Seattle lat/long range
 
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = self.request_params_to_query
     image = HTTParty.get("#{uri}?#{query}")
-
-    # p image.inspect
-    p "URI", "#{uri}?#{query}"
+    self.url = uri + "?" + query
 
     filename = "overlays/#{Time.now.to_i}.png"
-
     img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{filename}", 'w', :encoding => 'ASCII-8BIT')
-
     img_file.write(image.parsed_response)
     # save the image somewhere else
 
@@ -41,16 +39,32 @@ class Request
   def request_params_to_query
     layers = "7,6,8,9"
     spatial_reference = 4326
-    size = '350,350'
+    # TODO: figureout how size affects bounding box
+    size = "500,500"
+    # dpi = 96
 
     {
-      "bbox"        => self.bounds,
-      "bboxSR"      => spatial_reference,
-      "layers"      => "show:#{layers}",
-      "f"           =>"image",
-      "size"        => size,
-      "transparent" => "true",
+      "dpi"=>"96",
+      "transparent"=>"true",
+      "format"=>"png8",
+      "layers"=>"show:#{layers}",
+      "bbox"=>self.bounds,
+      "bboxSR"=> spatial_reference,
+      "imageSR"=> spatial_reference,
+      "size"=> size,
+      "f"=>"image"
+      # "bbox"        => self.bounds,
+      # "bboxSR"      => spatial_reference,
+      # "imageSR"     => spatial_reference,
+      # "layers"      => "show:#{layers}",
+      # "f"           =>"image",
+      # # "size"        => size,
+      # "transparent" => "true",
+      # "format"      =>"png8",
     }.to_query
   end
 
+# {
+#
+# }
 end
