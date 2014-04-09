@@ -14,12 +14,10 @@ class Request
     query = self.request_params_to_query
     image = HTTParty.get("#{uri}?#{query}")
     self.url = uri + "?" + query
-
     filename = "overlays/#{Time.now.to_i}.png"
     img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{filename}", 'w', :encoding => 'ASCII-8BIT')
     img_file.write(image.parsed_response)
     # save the image somewhere else
-
     self.overlay = filename
   end
 
