@@ -39,12 +39,12 @@ class Request
   def request_params_to_query
     layers = "7,6,8,9"
     spatial_reference = 4326
-    # TODO: figureout how size affects bounding box
+    # TODO: figure out how size affects bounding box
     size = "500,500"
-    # dpi = 96
+    dpi = 96
 
     {
-      "dpi"=>"96",
+      "dpi"=> dpi,
       "transparent"=>"true",
       "format"=>"png8",
       "layers"=>"show:#{layers}",
@@ -53,18 +53,6 @@ class Request
       "imageSR"=> spatial_reference,
       "size"=> size,
       "f"=>"image"
-      # "bbox"        => self.bounds,
-      # "bboxSR"      => spatial_reference,
-      # "imageSR"     => spatial_reference,
-      # "layers"      => "show:#{layers}",
-      # "f"           =>"image",
-      # # "size"        => size,
-      # "transparent" => "true",
-      # "format"      =>"png8",
     }.to_query
   end
-
-# {
-#
-# }
 end
