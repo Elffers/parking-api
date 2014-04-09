@@ -6,7 +6,10 @@ class Request
   field :version, type: String
   field :overlay, type: String
   field :url, type: String
-  validates :coords, :bounds, :client, presence: true
+
+  mount_uploader :overlay, OverlayUploader
+
+  validates :coords, :bounds, :client, :overlay, presence: true
   # TODO: validation on coordinates being within Seattle lat/long range
 
   def get_overlay
@@ -14,11 +17,11 @@ class Request
     query = self.request_params_to_query
     image = HTTParty.get("#{uri}?#{query}")
     self.url = uri + "?" + query
-    filename = "overlays/#{Time.now.to_i}.png"
-    img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{filename}", 'w', :encoding => 'ASCII-8BIT')
+    temp = "overlays/#{Time.now.to_i}.png"
+    img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{temp}", 'w', :encoding => 'ASCII-8BIT')
     img_file.write(image.parsed_response)
     # save the image somewhere else
-    self.overlay = filename
+    self.overlay = img_file
   end
 
   def set_client(user_agent_string)
