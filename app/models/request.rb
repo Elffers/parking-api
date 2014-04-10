@@ -20,8 +20,8 @@ class Request
     temp = "overlays/#{Time.now.to_i}.png"
     img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{temp}", 'w', :encoding => 'ASCII-8BIT')
     img_file.write(image.parsed_response)
-    # save the image somewhere else
     self.overlay = img_file
+    # self.overlay = image.parsed_response, obviates 20-22
   end
 
   def set_client(user_agent_string)

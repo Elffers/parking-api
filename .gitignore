@@ -19,3 +19,5 @@
 /config/application.yml
 
 /config/initializers/carrierwave.rb
+
+/app/assets/images/overlays
