@@ -18,13 +18,8 @@ class Request
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = self.request_params_to_query
-    image = HTTParty.get("#{uri}?#{query}")
-    self.url = uri + "?" + query
-    temp = "overlays/#{Time.now.to_i}.png"
-    img_file = File.new("#{Rails.root.to_s}/app/assets/images/#{temp}", 'w', :encoding => 'ASCII-8BIT')
-    img_file.write(image.parsed_response)
-    self.overlay = img_file
-    # self.overlay = image.parsed_response, obviates 20-22
+    self.remote_overlay_url = "#{uri}?#{query}"
+
   end
 
   def set_client(user_agent_string)

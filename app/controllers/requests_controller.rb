@@ -19,12 +19,15 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
+    # x = @request.to_json
+    # enqueue(job(x))
     respond_to do |format|
+      #put off saving until later (it will be a background job). get rid of conditional and still return overlay
       if @request.save
-        # format.html { redirect_to @request, notice: 'Request was successfully created.' }
+        format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request.overlay, status: 200 }
       else
-        format.html { render action: 'new' }
+        # format.html { render action: 'new' }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
     end
