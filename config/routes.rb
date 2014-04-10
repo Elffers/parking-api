@@ -1,3 +1,5 @@
 ParkingApi::Application.routes.draw do
-  resources :requests
+  defaults format: :json do
+    resources :requests
+  end
 end

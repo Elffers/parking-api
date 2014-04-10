@@ -21,8 +21,8 @@ class RequestsController < ApplicationController
     @request.get_overlay
     respond_to do |format|
       if @request.save
-        format.html { redirect_to @request, notice: 'Request was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @request }
+        # format.html { redirect_to @request, notice: 'Request was successfully created.' }
+        format.json { render json: @request.overlay, status: 200 }
       else
         format.html { render action: 'new' }
         format.json { render json: @request.errors, status: :unprocessable_entity }
