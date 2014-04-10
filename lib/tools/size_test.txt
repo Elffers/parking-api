@@ -1,0 +1,62 @@
+# long is the max bound we found manually gmaps, but lat is the same?
+
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.24%2C47.44%2C+-122.44%2C47.44&bboxSR=4326&layers=7&layerdefs=&size=800%2C2000&imageSR=4326&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+
+{
+    "bbox"=>"-122.24,47.44,+-122.44,47.44",
+    "bboxSR"=>"4326",
+    "layers"=>"7",
+    "layerdefs"=>nil,
+    "size"=>"800,2000",
+    "imageSR"=>"4326",
+    "format"=>"png",
+    "transparent"=>"false",
+    "dpi"=>nil,
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}
+
+# hypothesis: when aspect ratio is the same (size param )
+
+# Retina iPhone5:
+-122.430792, 47.506436, -122.254111, 47.710424
+size 1136, 640
+
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.430792%2C+47.506436%2C+-122.254111%2C+47.710424&bboxSR=4326&layers=5%2C6%2C7%2C8&layerdefs=&size=640%2C+1136&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+
+{
+    "bbox"=>"-122.430792,+47.506436,+-122.254111,+47.710424",
+    "bboxSR"=>"4326",
+    "layers"=>"5,6,7,8",
+    "layerdefs"=>nil,
+    "size"=>"640,+1136",
+    "imageSR"=>nil,
+    "format"=>"png",
+    "transparent"=>"false",
+    "dpi"=>nil,
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}
+
+
+#halving the size doesn't work:
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.430792%2C+47.506436%2C+-122.254111%2C+47.710424&bboxSR=4326&layers=5%2C6%2C7%2C8&layerdefs=&size=320%2C568&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+
+# keeping aspect ratio but scaling to 400 x 710 works:
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.430792%2C+47.506436%2C+-122.254111%2C+47.710424&bboxSR=4326&layers=5%2C6%2C7%2C8&layerdefs=&size=400%2C+710&imageSR=&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+{
+    "bbox"=>"-122.430792,+47.506436,+-122.254111,+47.710424",
+    "bboxSR"=>"4326",
+    "layers"=>"5,6,7,8",
+    "layerdefs"=>nil,
+    "size"=>"400,+710",
+    "imageSR"=>nil,
+    "format"=>"png",
+    "transparent"=>"false",
+    "dpi"=>nil,
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}

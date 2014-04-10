@@ -1,0 +1,76 @@
+EPSG code: 2926 (NAD_1983_HARN_StatePlane_Washington_North_FIPS_4601_Feet)
+
+from gui:
+(Greenlake area)
+
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.341331%2C47.657289%2C-122.310042%2C+47.693368&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=4326&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+
+{
+    "bbox"=>"-122.341331,47.657289,-122.310042,+47.693368",
+    "bboxSR"=>"4326",
+    "layers"=>"7",
+    "layerdefs"=>nil,
+    "size"=>nil,
+    "imageSR"=>"4326",
+    "format"=>"png",
+    "transparent"=>"false",
+    "dpi"=>nil,
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}
+
+
+Greenlake, resize (ignores bounding box?)
+
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.341331%2C47.657289%2C-122.310042%2C+47.693368&bboxSR=4326&layers=7&layerdefs=&size=800%2C500&imageSR=4326&format=png&transparent=false&dpi=&time=&layerTimeOptions=&f=image
+
+
+{
+    "bbox"=>"-122.341331,47.657289,-122.310042,+47.693368",
+    "bboxSR"=>"4326",
+    "layers"=>"7",
+    "layerdefs"=>nil,
+    "size"=>"800,500",
+    "imageSR"=>"4326",
+    "format"=>"png",
+    "transparent"=>"false",
+    "dpi"=>nil,
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}
+
+
+Karl's example:
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?dpi=96&transparent=true&format=png8&layers=show%3A1%2C7%2C5%2C6%2C8%2C9&bbox=-122.320704%2C47.661522%2C-122.311702%2C47.653692&bboxSR=4326&imageSR=4326&size=1278%2C559&f=image
+
+{
+    "dpi"=>"96",
+    "transparent"=>"true",
+    "format"=>"png8",
+    "layers"=>"show:1,7,5,6,8,9",
+    "bbox"=>"-122.320704,47.661522,-122.311702,47.653692",
+    "bboxSR"=>"4326",
+    "imageSR"=>"4326",
+    "size"=>"1278,559",
+    "f"=>"image"
+}
+
+Karl's example with different sizing:
+http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.320704%2C47.661522%2C-122.311702%2C47.653692&bboxSR=4326&layers=7&layerdefs=&size=&imageSR=&format=png8&transparent=true&dpi=96&time=&layerTimeOptions=&f=image
+
+{
+    "bbox"=>"-122.320704,47.661522,-122.311702,47.653692",
+    "bboxSR"=>"4326",
+    "layers"=>"7",
+    "layerdefs"=>nil,
+    "size"=>nil,
+    "imageSR"=>nil,
+    "format"=>"png8",
+    "transparent"=>"true",
+    "dpi"=>"96",
+    "time"=>nil,
+    "layerTimeOptions"=>nil,
+    "f"=>"image"
+}
