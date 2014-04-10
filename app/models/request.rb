@@ -40,6 +40,13 @@ class Request
     end
   end
 
+  def format_bounds(bounds)
+    # ((47.605372956656076, -122.33883241802977), (47.612606193258024, -122.3281035819702))
+    bounds = bounds.gsub(/\(/, "").gsub(/\)/, "").split(",")
+    bounds = bounds.map {|coordinate| coordinate.strip }
+    bounds = [bounds[1], bounds[0], bounds[3], bounds[2]].join(",")
+  end
+
   def request_params_to_query
     layers = "7,6,8,9"
     spatial_reference = 4326
