@@ -10,6 +10,7 @@ gem "mongoid", git: 'git://github.com/mongoid/mongoid.git'
 gem 'httparty'
 gem 'agent_orange'
 gem 'figaro'
+gem 'rack-cors'
 
 gem 'carrierwave'
 gem "fog", "~> 1.3.1"
