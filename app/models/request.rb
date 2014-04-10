@@ -2,9 +2,12 @@ class Request
   include Mongoid::Document
   field :coords, type: String
   field :bounds, type: String
+  # Time a valid type?
+  # field :timestamp, type: Time
   field :client, type: String
   field :version, type: String
   field :overlay, type: String
+  field :size, type: String
   field :url, type: String
 
   mount_uploader :overlay, OverlayUploader
@@ -41,7 +44,7 @@ class Request
     layers = "7,6,8,9"
     spatial_reference = 4326
     # TODO: figure out how size affects bounding box
-    size = "500,500"
+    # size = "500,500"
     dpi = 96
 
     {
@@ -52,7 +55,7 @@ class Request
       "bbox"=>self.bounds,
       "bboxSR"=> spatial_reference,
       "imageSR"=> spatial_reference,
-      "size"=> size,
+      "size"=> self.size,
       "f"=>"image"
     }.to_query
   end

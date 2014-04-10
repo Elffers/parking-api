@@ -44,6 +44,6 @@ class RequestsController < ApplicationController
     end
 
     def request_params
-      params.require(:request).permit(:coords, :bounds, :client, :version, :overlay)
+      params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
     end
 end
