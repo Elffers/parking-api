@@ -59,7 +59,7 @@ class Request
       "transparent"=>"true",
       "format"=>"png8",
       "layers"=>"show:#{layers}",
-      "bbox"=>self.bounds,
+      "bbox"=> format_bounds(self.bounds),
       "bboxSR"=> spatial_reference,
       "imageSR"=> spatial_reference,
       "size"=> self.size,
