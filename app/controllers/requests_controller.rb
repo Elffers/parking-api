@@ -23,7 +23,7 @@ class RequestsController < ApplicationController
     # enqueue(job(x))
     respond_to do |format|
       #put off saving until later (it will be a background job). get rid of conditional and still return overlay
-      if @request.save
+      if true
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       else
