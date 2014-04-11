@@ -11,6 +11,7 @@ gem 'httparty'
 gem 'agent_orange'
 gem 'figaro'
 gem 'rack-cors'
+gem 'resque'
 
 gem 'carrierwave'
 gem "fog", "~> 1.3.1"

@@ -17,10 +17,12 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new(request_params)
+    p "BEFORE", request_params
     @request.set_client(request.user_agent)
     @request.get_overlay
-    # x = @request.to_json
-    # enqueue(job(x))
+    request_params = @request.as_json
+    p "ENQUE", request_params
+    Resque.enqueue(SaveRequestJob, request_params)
     respond_to do |format|
       #put off saving until later (it will be a background job). get rid of conditional and still return overlay
       if true
