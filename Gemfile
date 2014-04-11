@@ -24,6 +24,7 @@ group :development, :test do
   gem "factory_girl_rails"
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'resque_spec'
   gem 'simplecov', :require => false
 end
 
