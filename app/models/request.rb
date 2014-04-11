@@ -23,8 +23,8 @@ class Request
   end
 
   def set_client(user_agent_string)
-    ua = AgentOrange::UserAgent.new(user_agent_string)
-    device = ua.device
+    user_agent = AgentOrange::UserAgent.new(user_agent_string)
+    device = user_agent.device
     if device.is_mobile?
       self.client = device.platform
       self.version = device.platform.version

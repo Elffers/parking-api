@@ -2,13 +2,55 @@ require 'spec_helper'
 
 describe RequestsController do
 
-  describe 'GET new' do
-  end
+  let(:valid_client_geodata) { {
+                                "coords"=>"(47.6090198, -122.33356800000001)",
+                                "bounds"=>"((47.60540305873747, -122.3389324180298), (47.61263629117663, -122.32820358197023))",
+                                "size"=>"500,500"
+                                }
+                              }
+  # Somewhere way southwest of Seattle
+  let(:invalid_client_geodata) { {
+                                  "coords"=>"(47.608970899999996, -122.33344590000002)",
+                                  "bounds"=>"((47.50494625158746, -122.37721955112306), (47.51943947765096, -122.35576187900392))",
+                                  "size"=>"500,500"
+                                }
+                              }
 
   describe 'POST create' do
-
     # something with returning cached URL rather than API call if same client and within certain proximity
-    it ''
+    context 'with valid bounds' do
+      it 'is successful' do
+        post :create, request: valid_client_geodata, format: :json
+        # p "RESPONSE", response.body
+        expect(response.status).to eq 200
+      end
+
+      xit 'sets the client' do
+        post :create, request: valid_client_geodata, format: :json
+        expect(response)
+      end
+
+      xit 'gets overlay' do
+      end
+
+      xit 'sets request_params' do
+        # expect request params to include all the appropriate fields to send to resque
+      end
+
+      xit 'enqueues save job' do
+      end
+
+      it 'returns JSON' do
+        post :create, request: valid_client_geodata, format: :json
+        parsed_response = JSON.parse(response.body)
+        expect { JSON.parse(response.body) }.to_not raise_error
+        expect(parsed_response.class).to eq(Hash)
+      end
+    end
+
+    context 'with invalid bounds' do
+
+    end
 
   end
 

@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
+  # before_action :check_bounds, only: [:create]
 
   def index
     @requests = Request.all
@@ -17,11 +18,10 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new(request_params)
-    p "BEFORE", request_params
+    # p "REQUEST", request.user_agent
     @request.set_client(request.user_agent)
     @request.get_overlay
     request_params = @request.as_json
-    p "ENQUE", request_params
     Resque.enqueue(SaveRequestJob, request_params)
     respond_to do |format|
       #put off saving until later (it will be a background job). get rid of conditional and still return overlay
@@ -50,5 +50,14 @@ class RequestsController < ApplicationController
 
     def request_params
       params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
+    end
+
+    def check_bounds
+      # TODO: check bounds
+      bbox = params["request"]["bounds"]
+      bounds = bbox.delete("()").split(/\s*,\s*/)
+      # if bounds[1], bounds[3] && bounds[0], bounds[2] are within range
+      # else
+      # end
     end
 end

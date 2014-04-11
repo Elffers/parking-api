@@ -23,3 +23,7 @@
 /app/assets/images/overlays
 
 /public/uploads/tmp
+
+/coverage
+
+dump.rdb
