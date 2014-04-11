@@ -1,1 +1,1 @@
-json.extract! @request, :id, :coords, :bounds, :client, :version, :overlay
+json.extract! @request, :id, :coords, :bounds, :client, :version, :overlay, :url

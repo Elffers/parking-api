@@ -18,6 +18,7 @@ class Request
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = self.request_params_to_query
+    self.url = "#{uri}?#{query}"
     self.remote_overlay_url = "#{uri}?#{query}"
 
   end
