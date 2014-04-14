@@ -22,8 +22,13 @@ class RequestsController < ApplicationController
     @request.set_client(request.user_agent)
     @request.get_overlay
     request_params = @request.as_json
-
-    if @request.overlay
+    # p request.user_agent
+    if !@request.valid?
+      respond_to do |format|
+        format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
+        format.json { render json: @request, status: 400 }
+      end
+    elsif @request.overlay
       Resque.enqueue(SaveRequestJob, request_params)
 
       respond_to do |format|

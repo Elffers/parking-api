@@ -5,7 +5,7 @@ describe RequestsController do
   let(:valid_client_geodata) { {
                                 "coords"=>"(47.6090198, -122.33356800000001)",
                                 "bounds"=>"((47.60540305873747, -122.3389324180298), (47.61263629117663, -122.32820358197023))",
-                                "size"=>"500,500"
+                                "size"=>"500,500",
                                 }
                               }
   # Somewhere way southwest of Seattle
@@ -17,11 +17,14 @@ describe RequestsController do
                               }
 
   describe 'POST create' do
+    # let(:request_object) { Request.new(valid_client_geodata) }
     let(:client){ double("Client") }
     # something with returning cached URL rather than API call if same client and within certain proximity
     context 'with valid bounds' do
       it 'is successful' do
+        Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
+
         # p "RESPONSE", response.body
         expect(response.status).to eq 200
       end
@@ -39,10 +42,13 @@ describe RequestsController do
         response_json = JSON.parse(response.body)
         expect(response_json["coords"]).to eq valid_client_geodata["coords"]
         expect(response_json["overlay"]).to_not be_nil
-
       end
 
-      xit 'sets request_params' do
+      it 'checks validity of request params' do
+        geodata = invalid_client_geodata
+        geodata["coords"] = nil
+        post :create, request: geodata, format: :json
+        expect(response.status).to eq 400
         # expect request params to include all the appropriate fields to send to resque
       end
 
