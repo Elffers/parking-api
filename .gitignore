@@ -18,8 +18,6 @@
 # Ignore application configuration
 /config/application.yml
 
-/config/initializers/carrierwave.rb
-
 /app/assets/images/overlays
 
 /public/uploads/tmp
