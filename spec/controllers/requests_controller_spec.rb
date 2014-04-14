@@ -17,6 +17,7 @@ describe RequestsController do
                               }
 
   describe 'POST create' do
+    let(:client){ double("Client") }
     # something with returning cached URL rather than API call if same client and within certain proximity
     context 'with valid bounds' do
       it 'is successful' do
@@ -26,11 +27,19 @@ describe RequestsController do
       end
 
       xit 'sets the client' do
+        assigns(:request).stub(:set_client).and_return client
+
         post :create, request: valid_client_geodata, format: :json
-        expect(response)
+        # This is more of a model spec
+        expect(assigns(:request).client).to eq client
       end
 
-      xit 'gets overlay' do
+      it 'gets overlay' do
+        post :create, request: valid_client_geodata, format: :json
+        response_json = JSON.parse(response.body)
+        expect(response_json["coords"]).to eq valid_client_geodata["coords"]
+        expect(response_json["overlay"]).to_not be_nil
+
       end
 
       xit 'sets request_params' do

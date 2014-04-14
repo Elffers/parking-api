@@ -12,7 +12,7 @@ class Request
 
   mount_uploader :overlay, OverlayUploader
 
-  validates :coords, :bounds, :client, :overlay, presence: true
+  validates :coords, :bounds, :client, presence: true
   # TODO: validation on coordinates being within Seattle lat/long range
 
   def get_overlay
@@ -25,6 +25,7 @@ class Request
   def set_client(user_agent_string)
     user_agent = AgentOrange::UserAgent.new(user_agent_string)
     device = user_agent.device
+
     if device.is_mobile?
       self.client = device.platform
       self.version = device.platform.version
