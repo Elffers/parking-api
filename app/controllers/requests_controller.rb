@@ -18,26 +18,21 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new(request_params)
-    # p "REQUEST", request.user_agent
     @request.set_client(request.user_agent)
     @request.get_overlay
-    request_params = @request.as_json
-    # p request.user_agent
     if !@request.valid?
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
         format.json { render json: @request, status: 400 }
       end
     elsif @request.overlay
-      Resque.enqueue(SaveRequestJob, request_params)
-
+      @request.save
+      # Resque.enqueue(SaveRequestJob, request_params)
       respond_to do |format|
-        #put off saving until later (it will be a background job). get rid of conditional and still return overlay
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
     else
-      # ERROR
       respond_to do |format|
         format.json { render json: "NOOOOOPE", status: 404 }
       end
