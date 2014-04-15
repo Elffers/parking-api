@@ -31,3 +31,12 @@ end
 group :doc do
   gem 'sdoc', require: false
 end
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+end
+
+gem 'therubyracer', platforms: :ruby
