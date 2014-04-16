@@ -6,6 +6,8 @@ class RangeChecker
   WEST_BOUND   = -122.435749
   EAST_BOUND   = -122.245548
 
+  # SW and NE
+  #((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))
   def initialize(bbox_string)
     bounds = bbox_string.delete("()").split(/\s*,\s*/)
     @longitude = [bounds[1], bounds[3]]
@@ -13,17 +15,19 @@ class RangeChecker
   end
 
   def longitude
-    bools = @longitude.map do |coord|
-      WEST_BOUND < coord.to_f && coord.to_f < EAST_BOUND
-    end
+    bools = @longitude.map { |coord| within_range(coord.to_f, WEST_BOUND, EAST_BOUND) }
     bools.first && bools.last
   end
 
   def latitude
-    bools = @latitude.map do |coord|
-      SOUTH_BOUND < coord.to_f && coord.to_f < NORTH_BOUND
-    end
-    bools.first && bools.last
+    valid_coords = @latitude.select { |p| within_range(p.to_f, SOUTH_BOUND, NORTH_BOUND) }
+    valid_coords.length == 2
+  end
+
+  private
+
+  def within_range(point, a, b)
+    a < point && point < b
   end
 
 end
