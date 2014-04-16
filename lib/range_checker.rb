@@ -16,13 +16,11 @@ class RangeChecker
   end
 
   def longitude
-    bools = @longitude.map { |coord| within_range(coord.to_f, WEST_BOUND, EAST_BOUND) }
-    bools.first && bools.last
+    @longitude.all? { |coord| within_range(coord.to_f, WEST_BOUND, EAST_BOUND) }
   end
 
   def latitude
-    valid_coords = @latitude.select { |p| within_range(p.to_f, SOUTH_BOUND, NORTH_BOUND) }
-    valid_coords.length == 2
+    @latitude.all? { |p| within_range(p.to_f, SOUTH_BOUND, NORTH_BOUND) }
   end
 
   def validate
