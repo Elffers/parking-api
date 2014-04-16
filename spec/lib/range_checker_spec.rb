@@ -1,5 +1,10 @@
 require 'spec_helper'
 
+# north lat: 47.736352
+# south lat: 47.524361
+# west long: -122.435749
+# east long: -122.245548
+
 describe RangeChecker do
   let(:valid_bbox) { RangeChecker.new("((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))")}
   let(:invalid_bbox) { RangeChecker.new("((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))")}
@@ -25,7 +30,3 @@ describe RangeChecker do
   end
 end
 
-# north lat: 47.736352
-# south lat: 47.524361
-# west long: -122.435749
-# east long: -122.245548
