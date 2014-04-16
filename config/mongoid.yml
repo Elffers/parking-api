@@ -69,8 +69,15 @@ test:
         retry_interval: 0
 
         # For Heroku deployment. TODO: change to ec2
+# production:
+#   sessions:
+#     default:
+#       uri: <%= ENV['MONGOHQ_URL'] %>
+#       options:
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGOHQ_URL'] %>
-      options:
+      database: parking_api_production
+      hosts:
+        - localhost:27017
+
