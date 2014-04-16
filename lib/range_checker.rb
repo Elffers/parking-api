@@ -20,7 +20,7 @@ class RangeChecker
   end
 
   def latitude
-    @latitude.all? { |p| within_range(p.to_f, SOUTH_BOUND, NORTH_BOUND) }
+    @latitude.all? { |coord| within_range(coord.to_f, SOUTH_BOUND, NORTH_BOUND) }
   end
 
   def validate
