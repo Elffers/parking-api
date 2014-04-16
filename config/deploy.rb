@@ -46,16 +46,15 @@ namespace :deploy do
 end
 
 namespace :deploy do
-  namespace :assets do
-    task :precompile do
-      on roles(:web), :except => { :no_release => true } do
-        if capture("cd #{latest_release} && #{source.local.log(source.next_revision(current_revision))} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
-          run "cd #{latest_release} && bundle exec #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
-        else
-          logger.info "No changes on assets. Skipping pre-compilation."
+  task :precompile do
+    on roles :web do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute 'bundle exec rake', "assets:precompile"
         end
       end
     end
   end
+
 end
 
