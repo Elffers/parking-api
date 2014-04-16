@@ -12,6 +12,7 @@ gem 'agent_orange'
 gem 'figaro'
 gem 'rack-cors'
 gem 'resque'
+gem 'rake', '=10.1.0'
 
 gem 'carrierwave'
 gem "fog", "~> 1.3.1"
