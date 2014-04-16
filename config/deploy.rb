@@ -4,6 +4,8 @@ set :use_sudo, false
 
 set :deploy_to, '/var/www/parking-api'
 
+set :rake, 'bundle exec rake'
+
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # set :deploy_to, '/var/www/my_app'
@@ -20,6 +22,7 @@ set :deploy_to, '/var/www/parking-api'
 # set :keep_releases, 5
 
 namespace :deploy do
+
 
   desc 'Restart application'
   task :restart do
@@ -41,3 +44,18 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
 
 end
+
+namespace :deploy do
+  namespace :assets do
+    task :precompile do
+      on roles(:web), :except => { :no_release => true } do
+        if capture("cd #{latest_release} && #{source.local.log(source.next_revision(current_revision))} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
+          run "cd #{latest_release} && bundle exec #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
+        else
+          logger.info "No changes on assets. Skipping pre-compilation."
+        end
+      end
+    end
+  end
+end
+
