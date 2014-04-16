@@ -35,13 +35,15 @@ namespace :figaro do
   desc "Symlink application.yml to the release path"
   task :symlink do
     on roles(:app) do
+    execute "ln -sf #{shared_path}/application.yml #{release_path}/config/application.yml"
     execute "ln -sf #{shared_path}/application.yml #{current_path}/config/application.yml"
     end
   end
 end
 
 after "deploy:started", "figaro:setup"
-after "deploy:symlink:release", "figaro:symlink"
+after "deploy:symlink:linked_dirs", "figaro:symlink"
+# after "deploy:symlink:release", "figaro:symlink"
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
