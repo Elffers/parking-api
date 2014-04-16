@@ -8,10 +8,11 @@ class RangeChecker
 
   # SW and NE
   #((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))
+
   def initialize(bbox_string)
-    bounds = bbox_string.delete("()").split(/\s*,\s*/)
-    @longitude = [bounds[1], bounds[3]]
-    @latitude = [bounds[0], bounds[2]]
+    bounds      = bbox_string.delete("()").split(/\s*,\s*/)
+    @longitude  = [bounds[1], bounds[3]]
+    @latitude   = [bounds[0], bounds[2]]
   end
 
   def longitude
@@ -22,6 +23,10 @@ class RangeChecker
   def latitude
     valid_coords = @latitude.select { |p| within_range(p.to_f, SOUTH_BOUND, NORTH_BOUND) }
     valid_coords.length == 2
+  end
+
+  def validate
+    latitude && longitude
   end
 
   private

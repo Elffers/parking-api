@@ -9,7 +9,7 @@ describe RangeChecker do
   let(:valid_bbox) { RangeChecker.new("((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))")}
   let(:invalid_bbox) { RangeChecker.new("((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))")}
 
-  describe 'longitude' do
+  describe '#longitude' do
     it 'returns false if outside range' do
       expect(invalid_bbox.longitude).to eq false
     end
@@ -19,13 +19,23 @@ describe RangeChecker do
     end
   end
 
-  describe 'latitude' do
+  describe '#latitude' do
     it 'returns false if outside range' do
       expect(invalid_bbox.longitude).to eq false
     end
 
     it 'returns true if within range' do
       expect(valid_bbox.latitude).to eq true
+    end
+  end
+
+  describe '#validate' do
+    it 'returns true if all coordinates are within bounds' do
+      expect(valid_bbox.validate).to eq true
+    end
+
+    it 'returns false if at least one coordinate is out of bounds' do
+      expect(invalid_bbox.validate).to eq false
     end
   end
 end
