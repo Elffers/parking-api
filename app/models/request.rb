@@ -22,10 +22,10 @@ class Request
     self.remote_overlay_url = "#{uri}?#{query}"
   end
 
+  # Identifies type of browser/device the query is coming from
   def set_client(user_agent_string)
     user_agent = AgentOrange::UserAgent.new(user_agent_string)
     device = user_agent.device
-
     if device.is_mobile?
       self.client = device.platform
       self.version = device.platform.version
@@ -45,7 +45,6 @@ class Request
     bounds = bounds.delete("()").split(/\s*,\s*/)
     [bounds[1], bounds[0], bounds[3], bounds[2]].join(",")
   end
-
 
   # Bounding box spatial reference 4326 refers to Geographic Coordinate System (GCS).
   # Image spatial reference 2926 refers to Washington State Plane North, NAD83 HARN, US Survey feet

@@ -57,9 +57,12 @@ class RequestsController < ApplicationController
     end
 
     def check_bounds
-      # TODO: check bounds
-      bbox = params["request"]["bounds"]
+      # bbox = params["request"]["bounds"]
+      bbox = "((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))"
       bounds = bbox.delete("()").split(/\s*,\s*/)
+      longs = [bounds[1], bounds[3]]
+      lats = [bounds[0], bounds[2]]
+      puts "LATS", lats, "LONGS", longs
       # if bounds[1], bounds[3] && bounds[0], bounds[2] are within range
       # else
       # end

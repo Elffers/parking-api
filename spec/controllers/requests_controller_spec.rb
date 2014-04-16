@@ -63,7 +63,12 @@ describe RequestsController do
       end
     end
 
-    context 'with invalid bounds' do
+    context '#check_bounds' do
+      it 'parses out latitudes' do
+      end
+
+      it 'parses out longitudes' do
+      end
 
     end
 

@@ -13,6 +13,9 @@ Bundler.require(:default, Rails.env)
 
 module ParkingApi
   class Application < Rails::Application
+    # to require service object in /lib directory
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
     config.middleware.use Rack::Cors do
       allow do
         # this allows any other domain to access your API
