@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
   before_action :check_bounds, only: [:create]
+  # before_action :check_zoom, only: [:create]
 
   def index
     @requests = Request.all
@@ -13,13 +14,11 @@ class RequestsController < ApplicationController
     @request = Request.new
   end
 
-  def edit
-  end
-
   def create
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
+    # .valid? for :coords, :bounds, :size, :client, :overlay. Parlty unnecessary with check bounds?
     if !@request.valid?
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
