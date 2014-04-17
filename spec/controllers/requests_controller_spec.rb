@@ -11,7 +11,7 @@ describe RequestsController do
   # Somewhere way southwest of Seattle
   let(:invalid_client_geodata) { {
                                   "coords"=>"(47.608970899999996, -122.33344590000002)",
-                                  "bounds"=>"((47.50494625158746, -122.37721955112306), (47.51943947765096, -122.35576187900392))",
+                                  "bounds"=>"((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))",
                                   "size"=>"500,500"
                                 }
                               }
@@ -74,11 +74,10 @@ describe RequestsController do
     end
 
     context '#check_bounds' do
-      xit 'returns error message if bounds out of range' do
+      it 'returns error if bounds out of range' do
+        post :create, request: invalid_client_geodata, format: :json
+        expect(response.status).to eq 400
       end
-
     end
-
   end
-
 end
