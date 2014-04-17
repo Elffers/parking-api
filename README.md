@@ -1,14 +1,13 @@
-Service API for Seattle street parking information
+#Service API for Seattle street parking information
 
-Receives parameters from front-end clients to query the Seattle government ArcGIS server for parking information.
+Receives parameters from front-end clients to query the Seattle government ArcGIS server (http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer) for parking information.
 
 Parameters needed in :request key of parameters:
 
-*:coords - Latitude, Longitude coordinates using Geographic Coordinate System
-*:bounds - Southwest and Northeast cordners of bounding box formatted as ((Lat1, Long1), (Lat2, Long2))
-*:size - width x height (in pixels) as string, e.g. "400,400"
+* :coords - Latitude, Longitude coordinates using Geographic Coordinate System as string, e.g. "(47.609023, -122.33373610000001)"
+* :bounds - Southwest and Northeast cordners of bounding box formatted as string, e.g. "((Lat1, Long1), (Lat2, Long2))"  
+* :size - width x height (in pixels) as string, e.g. "400,400"  
 
-(http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer)
 
 Requirements:
 * Ruby 2.1.1
