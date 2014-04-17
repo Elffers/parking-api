@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  before_action :check_bounds, only: [:create]
+  # before_action :check_bounds, only: [:create]
 
   def index
     @requests = Request.all
