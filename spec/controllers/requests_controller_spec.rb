@@ -17,15 +17,23 @@ describe RequestsController do
                               }
 
   describe 'POST create' do
-    # let(:request_object) { Request.new(valid_client_geodata) }
+
+    before do
+      ResqueSpec.reset!
+    end
+
+
+    let(:request_object) { Request.new(valid_client_geodata) }
     let(:client){ double("Client") }
+
     # something with returning cached URL rather than API call if same client and within certain proximity
+
     context 'with valid bounds' do
       it 'is successful' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
 
-        # p "RESPONSE", response.body
+        p "RESPONSE", response.body
         expect(response.status).to eq 200
       end
 
@@ -63,7 +71,12 @@ describe RequestsController do
       end
     end
 
-    context 'with invalid bounds' do
+    context '#check_bounds' do
+      it 'parses out latitudes' do
+      end
+
+      it 'parses out longitudes' do
+      end
 
     end
 

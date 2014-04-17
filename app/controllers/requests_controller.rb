@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  # before_action :check_bounds, only: [:create]
+  before_action :check_bounds, only: [:create]
 
   def index
     @requests = Request.all
@@ -57,11 +57,9 @@ class RequestsController < ApplicationController
     end
 
     def check_bounds
-      # TODO: check bounds
-      bbox = params["request"]["bounds"]
-      bounds = bbox.delete("()").split(/\s*,\s*/)
-      # if bounds[1], bounds[3] && bounds[0], bounds[2] are within range
-      # else
-      # end
+      RangeChecker.new(params["bounds"]).validate
     end
+
+    # def check_zoom
+    # end
 end
