@@ -77,6 +77,7 @@ describe RequestsController do
       it 'returns error if bounds out of range' do
         post :create, request: invalid_client_geodata, format: :json
         expect(response.status).to eq 400
+        expect(response.body).to eq "You are not in range"
       end
     end
   end

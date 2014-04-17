@@ -61,7 +61,7 @@ class RequestsController < ApplicationController
       unless range.validate
         respond_to do |format|
           format.html { render :index, notice: 'You are not in range.' }
-          format.json { render json: @request, status: 400 }
+          format.json { render json: "You are not in range", status: 400 }
         end
       end
     end
