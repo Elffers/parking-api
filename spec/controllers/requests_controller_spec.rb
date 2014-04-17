@@ -11,7 +11,7 @@ describe RequestsController do
   # Somewhere way southwest of Seattle
   let(:invalid_client_geodata) { {
                                   "coords"=>"(47.608970899999996, -122.33344590000002)",
-                                  "bounds"=>"((47.50494625158746, -122.37721955112306), (47.51943947765096, -122.35576187900392))",
+                                  "bounds"=>"((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))",
                                   "size"=>"500,500"
                                 }
                               }
@@ -22,14 +22,14 @@ describe RequestsController do
       ResqueSpec.reset!
     end
 
-
     let(:request_object) { Request.new(valid_client_geodata) }
     let(:client){ double("Client") }
 
     # something with returning cached URL rather than API call if same client and within certain proximity
 
     context 'with valid bounds' do
-      it 'is successful' do
+      # TODO: need to set test env to not hit s3
+      xit 'is successful' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
 
@@ -60,7 +60,9 @@ describe RequestsController do
         # expect request params to include all the appropriate fields to send to resque
       end
 
-      xit 'enqueues save job' do
+      it 'enqueues save job' do
+        post :create, request: valid_client_geodata, format: :json
+        SaveRequestJob.should have_queue_size_of(1)
       end
 
       it 'returns JSON' do
@@ -72,14 +74,11 @@ describe RequestsController do
     end
 
     context '#check_bounds' do
-      it 'parses out latitudes' do
+      it 'returns error if bounds out of range' do
+        post :create, request: invalid_client_geodata, format: :json
+        expect(response.status).to eq 400
+        expect(response.body).to eq "You are not in range"
       end
-
-      it 'parses out longitudes' do
-      end
-
     end
-
   end
-
 end
