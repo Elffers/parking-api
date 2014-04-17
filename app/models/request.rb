@@ -32,10 +32,10 @@ class Request
     else device.is_computer?
       self.client = device.engine.browser.name
       self.version = device.engine.browser.version
-    # TODO: elsif other conditions for not mobile or computer? BOT?
     end
   end
 
+  private
   # Google Maps API returns the NE and SW corners of bounding box formatted as
   # "((latitude_1, longitude_1), (latitude_2, longitude_2))", e.g.
   # ((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808)).# Following method formats the bounds for ArcGIS bounding box query param, e.g.

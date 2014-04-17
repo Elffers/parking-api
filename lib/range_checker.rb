@@ -9,8 +9,8 @@ class RangeChecker
   # SW and NE
   #((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))
 
-  def initialize(bbox_string)
-    bounds      = bbox_string.delete("()").split(/\s*,\s*/)
+  def initialize(bounds_params)
+    bounds      = bounds_params.delete("()").split(/\s*,\s*/)
     @longitude  = [bounds[1], bounds[3]]
     @latitude   = [bounds[0], bounds[2]]
   end
