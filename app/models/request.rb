@@ -11,6 +11,7 @@ class Request
   field :url, type: String
 
   mount_uploader :overlay, OverlayUploader
+  store_in_background :overlay
 
   validates :coords, :bounds, :client, presence: true
 
