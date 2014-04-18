@@ -18,14 +18,12 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
-    # .valid? for :coords, :bounds, :size, :client, :overlay. Partly unnecessary with check bounds?
-    if !@request.valid?
+    if !@request.valid? # :coords, :bounds, :client
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
         format.json { render json: @request, status: 400 }
       end
     elsif @request.overlay
-      # @request.save
       attributes = @request.attributes
       Resque.enqueue(SaveRequestJob, attributes)
       respond_to do |format|

@@ -38,15 +38,13 @@ describe RequestsController do
       it 'sets the client' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
-
-        # This is more of a model spec
         expect(assigns(:request)).to be_valid
+        expect(assigns(:request).client).to eq client
       end
 
       it 'gets overlay' do
         post :create, request: valid_client_geodata, format: :json
         response_json = JSON.parse(response.body)
-        # p response_json
         expect(response_json["coords"]).to eq valid_client_geodata["coords"]
         expect(response_json["overlay"]).to_not be_nil
       end
@@ -56,7 +54,6 @@ describe RequestsController do
         geodata["coords"] = nil
         post :create, request: geodata, format: :json
         expect(response.status).to eq 400
-        # expect request params to include all the appropriate fields to send to resque
       end
 
       it 'enqueues save job' do
@@ -79,6 +76,7 @@ describe RequestsController do
         expect(response.status).to eq 400
         expect(response.body).to eq "You are not in range"
       end
+
     end
   end
 end
