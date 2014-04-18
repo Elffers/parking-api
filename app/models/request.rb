@@ -1,9 +1,8 @@
 class Request
+
   include Mongoid::Document
   field :coords, type: String
   field :bounds, type: String
-  # Time a valid type?
-  # field :timestamp, type: Time
   field :client, type: String
   field :version, type: String
   field :overlay, type: String
@@ -22,6 +21,11 @@ class Request
     self.query = "#{uri}?#{query}"
     self.remote_overlay_url = self.query
     self.url = self.overlay.path
+  end
+
+  def reset_url
+    self.url = self.overlay.to_s
+    # destroy tempfile
   end
 
   # Identifies type of browser/device the query is coming from

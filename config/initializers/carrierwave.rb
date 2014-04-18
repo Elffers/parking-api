@@ -7,5 +7,8 @@ CarrierWave.configure do |config|
   }
   config.fog_directory  = fog_credentials['S3_BUCKET_NAME']
   config.fog_public     = false
-  # config.cache_dir = "#{Rails.root}/tmp/uploads"
+
+  if Rails.env.test?
+    config.storage = :file
+  end
 end
