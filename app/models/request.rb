@@ -10,13 +10,10 @@ class Request
   field :url, type: String
 
   field :overlay, type: String
-  field :overlay_tmp, type: String #this will be same as :url before save?
 
   mount_uploader :overlay, OverlayUploader
 
   validates :coords, :bounds, :client, presence: true
-  store_in_background :overlay
-
 
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"

@@ -25,8 +25,9 @@ class RequestsController < ApplicationController
         format.json { render json: @request, status: 400 }
       end
     elsif @request.overlay
-      @request.save
-      # Resque.enqueue(SaveRequestJob, request_params)
+      # @request.save
+      attributes = @request.attributes
+      Resque.enqueue(SaveRequestJob, attributes)
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
