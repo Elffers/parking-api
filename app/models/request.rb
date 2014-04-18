@@ -7,8 +7,6 @@ class Request
   field :version, type: String
   field :size, type: String
   field :query, type: String
-  field :url, type: String
-
   field :overlay, type: String
 
   mount_uploader :overlay, OverlayUploader
@@ -21,11 +19,10 @@ class Request
 
     self.query = "#{uri}?#{query}"
     self.remote_overlay_url = self.query
-    self.url = self.overlay.path
   end
 
   def reset_url
-    self.url = self.overlay.to_s
+    self.url = self.overlay.url
     # destroy tempfile
   end
 

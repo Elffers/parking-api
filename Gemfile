@@ -15,7 +15,6 @@ gem 'resque'
 gem 'rake', '=10.1.0'
 
 gem 'carrierwave'
-gem 'carrierwave_backgrounder'
 gem "fog", "~> 1.3.1"
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
