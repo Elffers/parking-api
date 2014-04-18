@@ -46,6 +46,7 @@ describe RequestsController do
       it 'gets overlay' do
         post :create, request: valid_client_geodata, format: :json
         response_json = JSON.parse(response.body)
+        # p response_json
         expect(response_json["coords"]).to eq valid_client_geodata["coords"]
         expect(response_json["overlay"]).to_not be_nil
       end
@@ -59,6 +60,7 @@ describe RequestsController do
       end
 
       it 'enqueues save job' do
+        Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
         SaveRequestJob.should have_queue_size_of(1)
       end
