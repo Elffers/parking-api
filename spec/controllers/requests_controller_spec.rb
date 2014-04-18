@@ -28,21 +28,19 @@ describe RequestsController do
     # something with returning cached URL rather than API call if same client and within certain proximity
 
     context 'with valid bounds' do
-      # TODO: need to set test env to not hit s3
-      xit 'is successful' do
+      it 'is successful' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
 
-        p "RESPONSE", response.body
         expect(response.status).to eq 200
       end
 
-      xit 'sets the client' do
-        assigns(:request).stub(:set_client).and_return client
-
+      it 'sets the client' do
+        Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
+
         # This is more of a model spec
-        expect(assigns(:request).client).to eq client
+        expect(assigns(:request)).to be_valid
       end
 
       it 'gets overlay' do

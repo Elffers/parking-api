@@ -8,18 +8,20 @@ class Request
   field :version, type: String
   field :overlay, type: String
   field :size, type: String
+  field :query, type: String
   field :url, type: String
 
   mount_uploader :overlay, OverlayUploader
 
   validates :coords, :bounds, :client, presence: true
-  # TODO: validation on coordinates being within Seattle lat/long range
 
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = self.request_params_to_query
-    self.url = "#{uri}?#{query}"
-    self.remote_overlay_url = "#{uri}?#{query}"
+
+    self.query = "#{uri}?#{query}"
+    self.remote_overlay_url = self.query
+    self.url = self.overlay.path
   end
 
   # Identifies type of browser/device the query is coming from

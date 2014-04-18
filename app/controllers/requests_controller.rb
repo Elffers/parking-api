@@ -18,7 +18,7 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
-    # .valid? for :coords, :bounds, :size, :client, :overlay. Parlty unnecessary with check bounds?
+    # .valid? for :coords, :bounds, :size, :client, :overlay. Partly unnecessary with check bounds?
     if !@request.valid?
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
@@ -47,24 +47,24 @@ class RequestsController < ApplicationController
   end
 
   private
-    def set_request
-      @request = Request.find(params[:id])
-    end
+  def set_request
+    @request = Request.find(params[:id])
+  end
 
-    def request_params
-      params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
-    end
+  def request_params
+    params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
+  end
 
-    def check_bounds
-      range = RangeChecker.new(params["request"]["bounds"])
-      unless range.validate
-        respond_to do |format|
-          format.html { render :index, notice: 'You are not in range.' }
-          format.json { render json: "You are not in range", status: 400 }
-        end
+  def check_bounds
+    range = RangeChecker.new(params["request"]["bounds"])
+    unless range.validate
+      respond_to do |format|
+        format.html { render :index, notice: 'You are not in range.' }
+        format.json { render json: "You are not in range", status: 400 }
       end
     end
+  end
 
-    # def check_zoom
-    # end
+  # def check_zoom
+  # end
 end
