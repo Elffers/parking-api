@@ -7,8 +7,8 @@ CarrierWave.configure do |config|
   }
 
   if Rails.env.test?
-    config.storage           = :file
-    # config.root              = "#{Rails.root}/tmp"
+    config.storage      = :file
+    # config.root       = "#{Rails.root}/tmp"
   else
     config.storage = :fog
   end

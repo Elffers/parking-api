@@ -23,17 +23,18 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
         format.json { render json: @request, status: 400 }
       end
-    elsif @request.overlay
+    else
       attributes = @request.attributes
+      attributes.delete "_id"
       Resque.enqueue(SaveRequestJob, attributes)
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
-    else
-      respond_to do |format|
-        format.json { render json: "NOOOOOPE", status: 404 }
-      end
+    # else
+    #   respond_to do |format|
+    #     format.json { render json: "NOOOOOPE", status: 404 }
+    #   end
     end
   end
 

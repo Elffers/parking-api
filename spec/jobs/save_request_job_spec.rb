@@ -7,7 +7,6 @@ describe SaveRequestJob do
                         "size"=>"400,400",
                         "client"=>"Chrome",
                         "query"=>"http://placekitten.com/200/200",
-                        "url"=>"/Users/hsing-huihsu/Ada-class/capstone/parking_api/public/uploads/tmp/1397784381-15581-7614/export.png"
                         }
                       }
   let(:request) { Request.new(request_params) }
@@ -16,12 +15,6 @@ describe SaveRequestJob do
     request.get_overlay
   end
 
-  it 'resets the url' do
-    request = SaveRequestJob.perform(request_params)
-    p request.overlay.inspect
-    p "REQUEST", request
-    expect(request.url).to eq 'bar'
-  end
 
 
 end
