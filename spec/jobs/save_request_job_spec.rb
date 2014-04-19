@@ -15,6 +15,4 @@ describe SaveRequestJob do
     request.get_overlay
   end
 
-
-
 end
