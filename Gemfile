@@ -18,13 +18,11 @@ gem 'carrierwave'
 gem "fog", "~> 1.3.1"
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
-group :development, :test do
+group :test do
   gem 'mongoid-rspec'
   gem "rspec-rails"
   gem "guard-rspec"
   gem "factory_girl_rails"
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'resque_spec'
   gem 'simplecov', :require => false
 end
@@ -38,6 +36,8 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 gem 'therubyracer', platforms: :ruby

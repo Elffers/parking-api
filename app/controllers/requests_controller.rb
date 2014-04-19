@@ -18,23 +18,23 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
-    # .valid? for :coords, :bounds, :size, :client, :overlay. Parlty unnecessary with check bounds?
-    if !@request.valid?
+    if !@request.valid? # :coords, :bounds, :client
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
         format.json { render json: @request, status: 400 }
       end
-    elsif @request.overlay
-      # @request.save
-      Resque.enqueue(SaveRequestJob, request_params)
+    else
+      attributes = @request.attributes
+      attributes.delete "_id"
+      Resque.enqueue(SaveRequestJob, attributes)
       respond_to do |format|
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
-    else
-      respond_to do |format|
-        format.json { render json: "NOOOOOPE", status: 404 }
-      end
+    # else
+    #   respond_to do |format|
+    #     format.json { render json: "NOOOOOPE", status: 404 }
+    #   end
     end
   end
 
@@ -47,24 +47,24 @@ class RequestsController < ApplicationController
   end
 
   private
-    def set_request
-      @request = Request.find(params[:id])
-    end
+  def set_request
+    @request = Request.find(params[:id])
+  end
 
-    def request_params
-      params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
-    end
+  def request_params
+    params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
+  end
 
-    def check_bounds
-      range = RangeChecker.new(params["request"]["bounds"])
-      unless range.validate
-        respond_to do |format|
-          format.html { render :index, notice: 'You are not in range.' }
-          format.json { render json: "You are not in range", status: 400 }
-        end
+  def check_bounds
+    range = RangeChecker.new(params["request"]["bounds"])
+    unless range.validate
+      respond_to do |format|
+        format.html { render :index, notice: 'You are not in range.' }
+        format.json { render json: "You are not in range", status: 400 }
       end
     end
+  end
 
-    # def check_zoom
-    # end
+  # def check_zoom
+  # end
 end

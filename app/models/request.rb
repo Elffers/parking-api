@@ -1,25 +1,29 @@
 class Request
+
   include Mongoid::Document
   field :coords, type: String
   field :bounds, type: String
-  # Time a valid type?
-  # field :timestamp, type: Time
   field :client, type: String
   field :version, type: String
-  field :overlay, type: String
   field :size, type: String
-  field :url, type: String
+  field :query, type: String
+  field :overlay, type: String
 
   mount_uploader :overlay, OverlayUploader
 
   validates :coords, :bounds, :client, presence: true
-  # TODO: validation on coordinates being within Seattle lat/long range
 
+  # sets .query to be the request string sent to query the Seattle ArcGIS API
+  # .overlay.url will be set to the tmp file until the request object is saved, at which point CarrierWave automatically updates .overlay.url to point to the S3 bucket address
   def get_overlay
     uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
     query = self.request_params_to_query
-    self.url = "#{uri}?#{query}"
-    self.remote_overlay_url = "#{uri}?#{query}"
+    self.query = "#{uri}?#{query}"
+    self.remote_overlay_url = self.query
+  end
+
+  def destroy_temp
+    # maybe unnecessary if use cron job
   end
 
   # Identifies type of browser/device the query is coming from

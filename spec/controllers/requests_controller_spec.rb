@@ -28,20 +28,17 @@ describe RequestsController do
     # something with returning cached URL rather than API call if same client and within certain proximity
 
     context 'with valid bounds' do
-      # TODO: need to set test env to not hit s3
-      xit 'is successful' do
+      it 'is successful' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
 
-        p "RESPONSE", response.body
         expect(response.status).to eq 200
       end
 
-      xit 'sets the client' do
-        assigns(:request).stub(:set_client).and_return client
-
+      it 'sets the client' do
+        Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
-        # This is more of a model spec
+        expect(assigns(:request)).to be_valid
         expect(assigns(:request).client).to eq client
       end
 
@@ -57,10 +54,10 @@ describe RequestsController do
         geodata["coords"] = nil
         post :create, request: geodata, format: :json
         expect(response.status).to eq 400
-        # expect request params to include all the appropriate fields to send to resque
       end
 
       it 'enqueues save job' do
+        Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
         SaveRequestJob.should have_queue_size_of(1)
       end
@@ -79,6 +76,7 @@ describe RequestsController do
         expect(response.status).to eq 400
         expect(response.body).to eq "You are not in range"
       end
+
     end
   end
 end
