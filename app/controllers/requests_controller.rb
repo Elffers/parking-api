@@ -53,7 +53,7 @@ class RequestsController < ApplicationController
 
   def check_bounds
     range = RangeChecker.new(params["request"]["bounds"])
-
+    dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png?AWSAccessKeyId=ASIAIO6GNGMN367KJSUQ&Expires=1398115345&Signature=57IUeXfVS5/B9aywwLYIFtxgd9Q%3D&x-amz-security-token=AQoDYXdzEPb//////////wEakAInAT47QMRyXMXPrnX5CBGI9GC4muYx07ZGwk5mk8WYR5itwl%2BFspCEZ6fRXXJCKwD%2BOdE26S%2BD6V1CAKSLdUgMHJJkeqE%2Bo4mcS4d1WFqc6AMVKI65uAyzboeCznrrg4jg5r4xhS1R3Et5IEwnRNt1QKiFD29MO5OIzU0iZBxgglicezpGlq52sXdva9uMHiMGwA8w66Zw%2BXwj9kh0l8eBmcb766P/LnrIWSirIbE4KRIYUEFOXrN6H6ml4xvHQ9K6/DFS1HCdAO/H4ax6M37LdgLoB%2BX/oF55CB4hwOr1Yc0BqvychwCC8MEntvgtP9syNeVpiPTvpwj8rJ9YCOjbeczoi8ZJ%2Bxe/7CaM5SxosSDJldaaBQ%3D%3D"
     unless range.validate
       respond_to do |format|
         format.html { render :index, notice: 'You are not in range.' }
