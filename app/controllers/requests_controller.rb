@@ -31,10 +31,6 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
-    # else
-    #   respond_to do |format|
-    #     format.json { render json: "NOOOOOPE", status: 404 }
-    #   end
     end
   end
 
@@ -57,10 +53,12 @@ class RequestsController < ApplicationController
 
   def check_bounds
     range = RangeChecker.new(params["request"]["bounds"])
+
     unless range.validate
       respond_to do |format|
         format.html { render :index, notice: 'You are not in range.' }
-        format.json { render json: "You are not in range", status: 400 }
+        # render a custom JSON object with overlay.url attribute
+        format.json { render json: dragons, status: 400 }
       end
     end
   end
