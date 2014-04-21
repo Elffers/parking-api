@@ -17,9 +17,8 @@ Information returned:
 * Seattle ArcGIS map URL (:query)
 
 Example:
-<code>
 
-{
+    {
     "_id": null,
     "bounds": "((47.56364247772959, -122.32194293442382), (47.56943376219384, -122.31335986557616))",
     "client": "Chrome",
@@ -30,8 +29,7 @@ Example:
     "query": "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.32194293442382%2C47.56364247772959%2C-122.31335986557616%2C47.56943376219384&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=2926&layers=show%3A7%2C6%2C8%2C9&size=500%2C500&transparent=true",
     "size": "500,500",
     "version": "34.0.1847.116"
-}
-</code>
+    }
 
 =======
 Requirements:
