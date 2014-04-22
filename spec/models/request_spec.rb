@@ -27,15 +27,14 @@ describe Request do
 
   describe '.get_overlay' do
     context 'for bounds fully contained in Seattle' do
+      let(:request){ Request.new(fully_in)}
       it 'should set the .query attribute' do
-        request = Request.new(fully_in)
         request.get_overlay
         expect(request.query).to_not be_nil
         expect(request.query).to eq "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.35476063769534%2C47.66510082328286%2C-122.32042836230471%2C47.68821721639755&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=2926&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true"
       end
 
       it 'should point to temp file as overlay.url' do
-        request = Request.new(fully_in)
         request.get_overlay
         id = /\d+-\d+-\d+/
         expect(request.overlay.url).to match "/uploads/tmp/#{id}/export.png"
@@ -43,15 +42,15 @@ describe Request do
     end
 
     context 'for bounds partly contained in Seattle' do
+      let(:request){ Request.new(partly_in)}
+
       it 'should set the .query attribute' do
-        request = Request.new(partly_in)
         request.get_overlay
         expect(request.query).to_not be_nil
         expect(request.query).to eq "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.36918523769532%2C47.71477902988729%2C-122.3348529623047%2C47.7378734102129&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=2926&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true"
       end
 
       it 'should point to temp file as overlay.url' do
-        request = Request.new(partly_in)
         request.get_overlay
         id = /\d+-\d+-\d+/
         expect(request.overlay.url).to match "/uploads/tmp/#{id}/export.png"
@@ -67,10 +66,10 @@ describe Request do
 
     it 'returns true if coords are within Seattle' do
       request1 = Request.new(partly_in)
+      request2 = Request.new(fully_in)
       expect(request1.in_seattle?).to eq true
+      expect(request2.in_seattle?).to eq true
     end
-
-
   end
 
 
