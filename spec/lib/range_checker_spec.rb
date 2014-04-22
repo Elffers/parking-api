@@ -6,61 +6,50 @@ require 'spec_helper'
 # east long: -122.245548
 
 describe RangeChecker do
-  let(:valid_bbox) { RangeChecker.new("((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))")}
-  let(:invalid_bbox) { RangeChecker.new("((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))")}
 
-  let(:zoomed_out_seattle){ RangeChecker.new({
+  let(:over_zoomed_seattle){ RangeChecker.new({
                                               "coords" => "(47.62862941481989, -122.39090529990231)",
                                               "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))"
                                               }
                                             )
-                          }
+                            }
   let(:portland){ RangeChecker.new({
                                     "coords" => "(45.522691, -122.673044)",
                                     "bounds" => "((45.51972139168435, -122.67725739209595), (45.52573491524078, -122.6686743232483))"
                                     }
                                   )
                 }
-# Portland coordinates : 45.522691, -122.673044
-# Portland BBOX: ((45.51972139168435, -122.67725739209595), (45.52573491524078, -122.6686743232483))
+  let(:partly_in){ RangeChecker.new({
+                                    "coords" => "(47.7263275, -122.3520191)",
+                                    "bounds" => "((47.71477902988729, -122.36918523769532), (47.7378734102129, -122.3348529623047))"
+                                    })
+                  }
 
-# zoomed_out_seattle bbox: ((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))
-# zoomed_out_seattle coords: (47.62862941481989, -122.39090529990231)
-
+  let(:fully_in){ RangeChecker.new({
+                                    "coords" => "(47.67666029999999, -122.33759450000002)",
+                                    "bounds" => "((47.66510082328286, -122.35476063769534), (47.68821721639755, -122.32042836230471))"
+                                  })
+                }
   describe '#in_seattle?' do
     it 'returns false if coordinates are not in Seattle limits' do
       expect(portland.in_seattle?).to eq false
     end
-  end
 
-  describe '#longitude' do
-    xit 'returns false if outside range' do
-      expect(invalid_bbox.longitude).to eq false
-    end
-
-    xit 'returns true if within range' do
-      expect(valid_bbox.longitude).to eq true
+    it 'returns true if coordinates are within Seattle limits' do
+      expect(fully_in.in_seattle?).to eq true
+      expect(partly_in.in_seattle?).to eq true
     end
   end
 
-  describe '#latitude' do
-    xit 'returns false if outside range' do
-      expect(invalid_bbox.longitude).to eq false
+  describe '#check_zoom' do
+    it 'returns true if zoomed in enough' do
+      expect(fully_in.check_zoom).to eq true
     end
 
-    xit 'returns true if within range' do
-      expect(valid_bbox.latitude).to eq true
+    it 'returns false if not zoomed in enough' do
+      expect(over_zoomed_seattle.check_zoom).to eq false
     end
   end
 
-  describe '#validate' do
-    xit 'returns true if all coordinates are within bounds' do
-      expect(valid_bbox.validate).to eq true
-    end
-
-    xit 'returns false if at least one coordinate is out of bounds' do
-      expect(invalid_bbox.validate).to eq false
-    end
-  end
 end
 

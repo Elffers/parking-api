@@ -58,7 +58,7 @@ describe Request do
     end
   end
 
-  describe '.in_seattle?' do
+  describe '#in_seattle?' do
     it 'returns false if coords not within Seattle' do
       request = Request.new(portland)
       expect(request.in_seattle?).to eq false
@@ -71,7 +71,5 @@ describe Request do
       expect(request2.in_seattle?).to eq true
     end
   end
-
-
 
 end
