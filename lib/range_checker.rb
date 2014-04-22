@@ -1,5 +1,5 @@
 class RangeChecker
-  attr_accessor :latitude, :longitude
+  attr_accessor :swX, :swY, :neX, :neY, :coords
 
   NORTH_BOUND  = 47.736352
   SOUTH_BOUND  = 47.524361
@@ -10,27 +10,24 @@ class RangeChecker
   #((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))
 
   def initialize(request_params)
-    p request_params
     bounds      = request_params[:bounds].delete("()").split(/\s*,\s*/)
-    @longitude  = [bounds[1], bounds[3]]
-    @latitude   = [bounds[0], bounds[2]]
+    @swX        = bounds[0].to_f
+    @swY        = bounds[1].to_f
+    @neX        = bounds[2].to_f
+    @neY        = bounds[3].to_f
     @coords     = request_params[:coords].delete("()").split(/\s*,\s*/)
   end
 
   def in_seattle?
-    within_range(@coords[0].to_f, NORTH_BOUND, SOUTH_BOUND) && within_range(@coords[1].to_f, WEST_BOUND, EAST_BOUND)
+    valid_latitude(@coords[0].to_f) && valid_longitude(@coords[1].to_f)
   end
 
-  def longitude
-    @longitude.all? { |coord| within_range(coord.to_f, WEST_BOUND, EAST_BOUND) }
+  def valid_longitude(y)
+    within_range(y, WEST_BOUND, EAST_BOUND)
   end
 
-  def latitude
-    @latitude.all? { |coord| within_range(coord.to_f, SOUTH_BOUND, NORTH_BOUND) }
-  end
-
-  def validate
-    latitude && longitude
+  def valid_latitude(x)
+    within_range(x, SOUTH_BOUND, NORTH_BOUND)
   end
 
   private
