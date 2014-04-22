@@ -6,16 +6,17 @@ class RangeChecker
   WEST_BOUND   = -122.435749
   EAST_BOUND   = -122.245548
 
-  # SW and NE
-  #((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))
+  # :coords come in as "(47.62862941481989, -122.39090529990231)"
+  # :bounds come in as SW and NE coords
+  # "((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808))"
 
   def initialize(request_params)
-    bounds      = request_params[:bounds].delete("()").split(/\s*,\s*/)
-    @swX        = bounds[0].to_f
-    @swY        = bounds[1].to_f
-    @neX        = bounds[2].to_f
-    @neY        = bounds[3].to_f
-    @coords     = request_params[:coords].delete("()").split(/\s*,\s*/)
+    bounds    = request_params["bounds"].delete("()").split(/\s*,\s*/)
+    @swX      = bounds[0].to_f
+    @swY      = bounds[1].to_f
+    @neX      = bounds[2].to_f
+    @neY      = bounds[3].to_f
+    @coords   = request_params["coords"].delete("()").split(/\s*,\s*/)
   end
 
   def in_seattle?
