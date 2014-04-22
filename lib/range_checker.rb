@@ -6,8 +6,8 @@ class RangeChecker
   WEST_BOUND   = -122.435749
   EAST_BOUND   = -122.245548
 
-  LAT_ZOOM     = 0.046308417435767524
-  LONG_ZOOM    = 0.06866455078125
+  LAT_ZOOM     = 0.04635
+  LONG_ZOOM    = 0.06867
 
   # :coords come in as "(47.62862941481989, -122.39090529990231)"
   # :bounds come in as SW and NE coords
@@ -26,7 +26,7 @@ class RangeChecker
     valid_latitude(@coords[0].to_f) && valid_longitude(@coords[1].to_f)
   end
 
-  def check_zoom
+  def zoomed?
     (@swX - @neX).abs <= LAT_ZOOM && (@swY - @neY).abs <= LONG_ZOOM
   end
 

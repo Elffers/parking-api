@@ -7,7 +7,7 @@ require 'spec_helper'
 
 describe RangeChecker do
 
-  let(:over_zoomed_seattle){ RangeChecker.new({
+  let(:zoomed_out_seattle){ RangeChecker.new({
                                               "coords" => "(47.62862941481989, -122.39090529990231)",
                                               "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))"
                                               }
@@ -43,11 +43,11 @@ describe RangeChecker do
 
   describe '#check_zoom' do
     it 'returns true if zoomed in enough' do
-      expect(fully_in.check_zoom).to eq true
+      expect(fully_in.zoomed?).to eq true
     end
 
     it 'returns false if not zoomed in enough' do
-      expect(over_zoomed_seattle.check_zoom).to eq false
+      expect(zoomed_out_seattle.zoomed?).to eq false
     end
   end
 

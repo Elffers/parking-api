@@ -80,7 +80,12 @@ class Request
   end
 
   def in_seattle?
+    coords = RangeChecker.new(self.attributes)
+    coords.in_seattle?
+  end
+
+  def zoomed?
     bounds = RangeChecker.new(self.attributes)
-    bounds.in_seattle?
+    bounds.zoomed?
   end
 end

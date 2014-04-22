@@ -4,7 +4,9 @@ describe Request do
 
   let(:partly_in){ {
                     coords: "(47.7263275, -122.3520191)",
-                    bounds: "((47.71477902988729, -122.36918523769532), (47.7378734102129, -122.3348529623047))" }}
+                    bounds: "((47.71477902988729, -122.36918523769532), (47.7378734102129, -122.3348529623047))"
+                    }
+                  }
 
   let(:fully_in){ {
                     coords: "(47.67666029999999, -122.33759450000002)",
@@ -18,6 +20,11 @@ describe Request do
                     "size"=>"500,500"
                     }
                   }
+  let(:zoomed_out){ {
+                      "coords" => "(47.62862941481989, -122.39090529990231)",
+                      "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))"
+                      }
+                    }
 
   describe "validations" do
     it { should validate_presence_of(:coords) }
@@ -72,4 +79,16 @@ describe Request do
     end
   end
 
+  describe '#zoomed?' do
+    it 'returns true if zoomed in' do
+      request = Request.new(partly_in)
+      expect(request.zoomed?).to eq true
+    end
+
+    it 'returns false if not zoomed in' do
+      request = Request.new(zoomed_out)
+      expect(request.zoomed?).to eq false
+    end
+
+  end
 end
