@@ -76,10 +76,9 @@ describe RequestsController do
         Request.any_instance.stub(:client).and_return client
         post :create, request: invalid_client_geodata, format: :json
         expect(response.status).to eq 418
-        # expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
       end
 
-      it 'returns dragons' do
+      it 'returns dragon overlay url' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: invalid_client_geodata, format: :json
         expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"

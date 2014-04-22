@@ -32,7 +32,6 @@ class RequestsController < ApplicationController
         format.json { render json: @request, status: 200 }
       end
     else
-      p "HELLO"
       dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
       respond_to do |format|
         format.html { render :index, notice: 'You are not in Seattle.' }
@@ -58,6 +57,7 @@ class RequestsController < ApplicationController
     params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
   end
 
-  # def check_zoom
-  # end
+  def find_request
+    @request
+  end
 end
