@@ -26,9 +26,9 @@ describe Request do
 
   describe '.set_client' do
 
+
   end
 
-  describe '.request_params_to_query' do
-  end
+
 
 end

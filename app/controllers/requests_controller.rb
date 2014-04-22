@@ -1,7 +1,8 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  before_action :check_bounds, only: [:create]
   # before_action :check_zoom, only: [:create]
+  before_action :check_bounds, only: [:create]
+  # before_action :find_request, only: [:create]
 
   def index
     @requests = Request.all
@@ -52,7 +53,7 @@ class RequestsController < ApplicationController
   end
 
   def check_bounds
-    range = RangeChecker.new(params["request"]["bounds"])
+    range = RangeChecker.new(params["request"])
     dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
     unless range.validate
       respond_to do |format|
