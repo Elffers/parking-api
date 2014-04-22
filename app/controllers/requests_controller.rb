@@ -15,6 +15,7 @@ class RequestsController < ApplicationController
   end
 
   def create
+    # Request.find_or_initialize_by
     @request = Request.new(request_params)
     @request.set_client(request.user_agent)
     @request.get_overlay
