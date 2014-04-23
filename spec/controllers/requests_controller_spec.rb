@@ -13,7 +13,7 @@ describe RequestsController do
                           "coords"=>"(47.6090198, -122.33356800000001)",
                           "bounds"=>"((47.60540305873747, -122.3389324180298), (47.61263629117663, -122.32820358197023))",
                           "size"=>"500,500",
-                          "client" => "Apple-iPhone4C1/1001.523"
+                          "client" => "iOS Parking App"
                           }
                         }
   # Portland
