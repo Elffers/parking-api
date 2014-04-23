@@ -46,6 +46,7 @@ end
 
 after "deploy:started", "figaro:setup"
 after "deploy:symlink:linked_dirs", "figaro:symlink"
+after "deploy:restart", "resque:restart"
 # after "deploy:symlink:release", "figaro:symlink"
 
 # you can set custom ssh options
