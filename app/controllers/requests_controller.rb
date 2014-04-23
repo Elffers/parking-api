@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_request, only: [:show, :destroy]
 
   def index
     @requests = Request.all
@@ -57,10 +57,6 @@ class RequestsController < ApplicationController
 
   def request_params
     params.require(:request).permit(:coords, :bounds, :size, :client, :version, :overlay)
-  end
-
-  def find_request
-    @request
   end
 
   def error_response(notice, json, status)
