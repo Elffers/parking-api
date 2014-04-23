@@ -88,4 +88,9 @@ class Request
     bounds = RangeChecker.new(self.attributes)
     bounds.zoomed?
   end
+
+  def queue_save
+    self.attributes.delete "_id"
+    Resque.enqueue(SaveRequestJob, attributes)
+  end
 end
