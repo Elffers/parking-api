@@ -90,6 +90,12 @@ describe RequestsController do
         post :create, request: zoomed_out, format: :json
         SaveRequestJob.should have_queue_size_of(0)
       end
+
+      it 'shows ladiezzzz' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out, format: :json
+        expect(response.body).to eq "https://LADIES.png"
+      end
     end
     context 'request is out of range' do
       it 'returns 418 error if coords out of range' do

@@ -32,6 +32,12 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
+    elsif @request.in_seattle? && !@request.zoomed?
+      ladiezzz = "https://LADIES.png"
+      respond_to do |format|
+        format.html { render :index, notice: 'You are not in Seattle.' }
+        format.json { render json: ladiezzz, status: 400 }
+      end
     elsif !@request.in_seattle?
       dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
       respond_to do |format|
