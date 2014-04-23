@@ -101,7 +101,7 @@ describe RequestsController do
       it 'shows ladiezzzz' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: zoomed_out, format: :json
-        expect(response.body).to eq "https://LADIES.png"
+        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png"
       end
     end
 

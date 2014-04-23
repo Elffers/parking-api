@@ -33,7 +33,7 @@ class RequestsController < ApplicationController
         format.json { render json: @request, status: 200 }
       end
     elsif @request.in_seattle? && !@request.zoomed?
-      ladiezzz = "https://LADIES.png"
+      ladiezzz = "https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png"
       respond_to do |format|
         format.html { render :index, notice: 'You are not in Seattle.' }
         format.json { render json: ladiezzz, status: 400 }
