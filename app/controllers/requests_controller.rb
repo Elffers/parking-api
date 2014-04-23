@@ -24,7 +24,7 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: 'Bad request.', status: 400 }
         format.json { render json: @request, status: 400 }
       end
-    elsif @request.in_seattle?
+    elsif @request.in_seattle? && @request.zoomed?
       attributes = @request.attributes
       attributes.delete "_id"
       Resque.enqueue(SaveRequestJob, attributes)
@@ -32,11 +32,16 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: 200 }
       end
-    else
+    elsif !@request.in_seattle?
       dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
       respond_to do |format|
         format.html { render :index, notice: 'You are not in Seattle.' }
         format.json { render json: dragons, status: 418 }
+      end
+    else # unknown error
+      respond_to do |format|
+        format.html { render :index, notice: 'PORBLEMS.' }
+        format.json { render json: "PORBLEMS", status: 400 }
       end
     end
   end
