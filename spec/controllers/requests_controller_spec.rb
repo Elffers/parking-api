@@ -47,13 +47,12 @@ describe RequestsController do
     end
 
     context 'from iPhone' do
-
       it 'is successful' do
         post :create, request: iphone_geodata, format: :json
         expect(response.status).to eq 200
       end
-
     end
+
     context 'with valid bounds' do
       it 'is successful' do
         post :create, request: valid_client_geodata, format: :json

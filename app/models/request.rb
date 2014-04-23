@@ -61,7 +61,7 @@ class Request
   def request_params_to_query
     layers = "7,6,8,9"
     bboxSR = 4326
-    imageSR = 2926
+    imageSR = 3857
     dpi = 96
     {
       "dpi"=> dpi,
