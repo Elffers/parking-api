@@ -8,13 +8,20 @@ describe RequestsController do
                                 "size"=>"500,500",
                                 }
                               }
-  # Somewhere way southwest of Seattle
-  let(:invalid_client_geodata) { {
-                                  "coords"=>"(47.608970899999996, -122.33344590000002)",
-                                  "bounds"=>"((48.62166982344883, -125.31682166721191), (47.624562336539235, -122.31253013278808))",
-                                  "size"=>"500,500"
-                                }
-                              }
+  # Portland
+  let(:portland) { {
+                    "coords" => "(45.522691, -122.673044)",
+                    "bounds" => "((45.51972139168435, -122.67725739209595), (45.52573491524078, -122.6686743232483))",
+                    "size"=>"500,500"
+                    }
+                  }
+
+  let(:zoomed_out){ {
+                      "coords" => "(47.62862941481989, -122.39090529990231)",
+                      "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))",
+                      "size"=>"500,500"
+                      }
+                    }
 
   describe 'POST create' do
 
@@ -31,7 +38,6 @@ describe RequestsController do
       it 'is successful' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
-
         expect(response.status).to eq 200
       end
 
@@ -49,13 +55,6 @@ describe RequestsController do
         expect(response_json["overlay"]).to_not be_nil
       end
 
-      it 'checks validity of request params' do
-        geodata = invalid_client_geodata
-        geodata["coords"] = nil
-        post :create, request: geodata, format: :json
-        expect(response.status).to eq 400
-      end
-
       it 'enqueues save job' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: valid_client_geodata, format: :json
@@ -70,13 +69,52 @@ describe RequestsController do
       end
     end
 
-    context '#check_bounds' do
-      it 'returns error if bounds out of range' do
-        post :create, request: invalid_client_geodata, format: :json
+    context 'bad requests' do
+      it 'returns 400 if param values are nil' do
+        geodata = portland
+        geodata.delete("coords")
+        post :create, request: geodata, format: :json
         expect(response.status).to eq 400
-        expect(response.body).to eq "You are not in range"
+      end
+    end
+
+    context 'map is zoomed out too far' do
+      it 'returns an error' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out, format: :json
+        expect(response.status).to eq 400
       end
 
+      it 'does not add request to saverequest queue' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out, format: :json
+        SaveRequestJob.should have_queue_size_of(0)
+      end
+
+      it 'shows ladiezzzz' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out, format: :json
+        expect(response.body).to eq "https://LADIES.png"
+      end
+    end
+    context 'request is out of range' do
+      it 'returns 418 error if coords out of range' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: portland, format: :json
+        expect(response.status).to eq 418
+      end
+
+      it 'does not add request to saverequest queue' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: portland, format: :json
+        SaveRequestJob.should have_queue_size_of(0)
+      end
+
+      it 'returns dragon overlay url' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: portland, format: :json
+        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
+      end
     end
   end
 end

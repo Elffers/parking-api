@@ -1,14 +1,18 @@
 class Request
 
   include Mongoid::Document
+  #comes in from client
   field :coords, type: String
   field :bounds, type: String
+  field :size, type: String
+
+  # set in .get_overlay
   field :client, type: String
   field :version, type: String
-  field :size, type: String
   field :query, type: String
-  field :overlay, type: String
 
+  # defined by CarrierWave
+  field :overlay, type: String
   mount_uploader :overlay, OverlayUploader
 
   validates :coords, :bounds, :client, presence: true
@@ -73,5 +77,15 @@ class Request
       "size"=> self.size,
       "f"=>"image"
     }.to_query
+  end
+
+  def in_seattle?
+    coords = RangeChecker.new(self.attributes)
+    coords.in_seattle?
+  end
+
+  def zoomed?
+    bounds = RangeChecker.new(self.attributes)
+    bounds.zoomed?
   end
 end
