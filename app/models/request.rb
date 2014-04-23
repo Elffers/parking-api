@@ -50,7 +50,7 @@ class Request
   end
 
   # Bounding box spatial reference 4326 refers to Geographic Coordinate System (GCS).
-  # Image spatial reference 2926 refers to Washington State Plane North, NAD83 HARN, US Survey feet
+  # Image spatial reference 3857 refers to EPSG:3857 - Projection used in many popular web mapping applications (Google/Bing/OpenStreetMap/etc).
   # Layers (http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer) include:
     # Temporary No Parking (6)
     # Street Parking by Category (7)
