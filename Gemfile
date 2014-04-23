@@ -36,6 +36,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
+  gem "capistrano-resque", github: "sshingler/capistrano-resque", require: false
   gem 'better_errors'
   gem 'binding_of_caller'
 end

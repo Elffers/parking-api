@@ -9,6 +9,9 @@ role :app, %w{ubuntu@ec2-54-186-130-90.us-west-2.compute.amazonaws.com}
 role :web, %w{ubuntu@ec2-54-186-130-90.us-west-2.compute.amazonaws.com}
 role :db,  %w{ubuntu@ec2-54-186-130-90.us-west-2.compute.amazonaws.com}
 
+role :resque_worker, %w{ubuntu@ec2-54-186-130-90.us-west-2.compute.amazonaws.com}
+role :resque_scheduler, %w{ubuntu@ec2-54-186-130-90.us-west-2.compute.amazonaws.com}
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server

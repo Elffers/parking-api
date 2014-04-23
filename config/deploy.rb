@@ -6,6 +6,12 @@ set :deploy_to, '/var/www/parking-api'
 
 set :rake, 'bundle exec rake'
 
+set :workers, { "save_request" => 1 }
+
+# Uncomment this line if your workers need access to the Rails environment:
+# set :resque_environment_task, true
+
+
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # set :deploy_to, '/var/www/my_app'
@@ -22,7 +28,6 @@ set :rake, 'bundle exec rake'
 # set :keep_releases, 5
 
 namespace :deploy do
-
 
   desc 'Restart application'
   task :restart do
