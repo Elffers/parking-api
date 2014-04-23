@@ -1,7 +1,5 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
-  # before_action :check_zoom, only: [:create]
-  # before_action :find_request, only: [:create]
 
   def index
     @requests = Request.all

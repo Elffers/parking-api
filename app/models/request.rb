@@ -26,10 +26,6 @@ class Request
     self.remote_overlay_url = self.query
   end
 
-  def destroy_temp
-    # maybe unnecessary if use cron job
-  end
-
   # Identifies type of browser/device the query is coming from
   def set_client(user_agent_string)
     user_agent = AgentOrange::UserAgent.new(user_agent_string)
