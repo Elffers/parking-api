@@ -29,6 +29,7 @@ class Request
   # Identifies type of browser/device the query is coming from
   def set_client(user_agent_string)
     user_agent = AgentOrange::UserAgent.new(user_agent_string)
+    p "USER AGENT", user_agent.inspect, user_agent_string.inspect
     device = user_agent.device
     if device.is_mobile?
       self.client = device.platform
