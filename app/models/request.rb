@@ -40,9 +40,9 @@ class Request
   end
 
   # Google Maps API returns the NE and SW corners of bounding box formatted as
-  # "((latitude_1, longitude_1), (latitude_2, longitude_2))", e.g.
+  # "((lat1, long1), (lat2, long2))", e.g.
   # ((47.62166982344883, -122.31682166721191), (47.624562336539235, -122.31253013278808)).# Following method formats the bounds for ArcGIS bounding box query param, e.g.
-  # "longitude_1, latitude_1, longitude_2, latitude_2"
+  # "long1, lat1, long2, lat2"
 
   def format_bounds(bounds)
     bounds = bounds.delete("()").split(/\s*,\s*/)
@@ -60,6 +60,7 @@ class Request
   def request_params_to_query
     layers = "7,6,8,9"
     bboxSR = 4326
+    # imageSR corresponds to GoogleMaps spatial reference
     imageSR = 3857
     dpi = 96
     {
