@@ -15,10 +15,7 @@ class RequestsController < ApplicationController
   def create
     # Request.find_or_initialize_by
     @request = Request.new(request_params)
-    # This could obv. be pulled out and refactored, but I wanted to show you/I don't know how to get the ios app to point to localhost for this request so I can't test it yet
-    unless @request.client.include? "Parking App"
-      @request.set_client(request.user_agent)
-    end
+    @request.set_client(request.user_agent)
     @request.get_overlay
     if !@request.valid?
       respond_to do |format|

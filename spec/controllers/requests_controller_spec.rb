@@ -36,7 +36,7 @@ describe RequestsController do
     before do
       ResqueSpec.reset!
       Request.any_instance.stub(:client).and_return client
-      client.stub(:include?).with("Parking App")
+      # client.stub(:include?).with("Parking App")
     end
 
     context 'with valid bounds' do
