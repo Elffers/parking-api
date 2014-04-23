@@ -8,6 +8,8 @@ set :rake, 'bundle exec rake'
 
 set :workers, { "save_request" => 1 }
 
+after "deploy:restart", "resque:restart"
+
 # Uncomment this line if your workers need access to the Rails environment:
 # set :resque_environment_task, true
 
