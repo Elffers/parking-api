@@ -2,11 +2,10 @@ require 'spec_helper'
 
 describe SaveRequestJob do
   let(:request_params){ {
-                        "coords"=>"foo",
-                        "bounds"=>"-122.341331, 47.657289, -122.310042, 47.693368",
+                        "coords" => "(47.67666029999999, -122.33759450000002)",
+                        "bounds" => "((47.66510082328286, -122.35476063769534), (47.68821721639755, -122.32042836230471))",
                         "size"=>"400,400",
                         "client"=>"Chrome",
-                        "query"=>"http://placekitten.com/200/200",
                         }
                       }
   let(:request) { Request.new(request_params) }
@@ -14,5 +13,12 @@ describe SaveRequestJob do
   before do
     request.get_overlay
   end
+
+  #  def get_overlay
+  #   uri = "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export"
+  #   query = self.request_params_to_query
+  #   self.query = "#{uri}?#{query}"
+  #   self.remote_overlay_url = self.query
+  # end
 
 end
