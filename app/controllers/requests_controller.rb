@@ -44,7 +44,7 @@ class RequestsController < ApplicationController
         format.html { render :index, notice: 'You are not in Seattle.' }
         format.json { render json: dragons, status: 418 }
       end
-    else # unknown error
+    else # unknown errors
       respond_to do |format|
         format.html { render :index, notice: 'PORBLEMS.' }
         format.json { render json: "PORBLEMS", status: 400 }

@@ -16,6 +16,7 @@ describe RequestsController do
                     }
                   }
 
+  # Seattle zoomed out
   let(:zoomed_out){ {
                       "coords" => "(47.62862941481989, -122.39090529990231)",
                       "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))",
@@ -23,6 +24,12 @@ describe RequestsController do
                       }
                     }
 
+  let(:zoomed_out_OR) { {
+                        "coords" => "(45.5234515, -122.6762071)",
+                        "bounds" => "((43.96294496792905, -124.873472725), (47.041843066686624, -120.478941475))",
+                        "size"=>"500,500"
+                        }
+                      }
   describe 'POST create' do
 
     before do
@@ -97,7 +104,8 @@ describe RequestsController do
         expect(response.body).to eq "https://LADIES.png"
       end
     end
-    context 'request is out of range' do
+
+    context 'request is out of range (of Seattle)' do
       it 'returns 418 error if coords out of range' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: portland, format: :json
@@ -113,6 +121,26 @@ describe RequestsController do
       it 'returns dragon overlay url' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: portland, format: :json
+        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
+      end
+    end
+
+    context 'request is out of range and zoomed out' do
+      it 'returns 418 error if coords out of range' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out_OR, format: :json
+        expect(response.status).to eq 418
+      end
+
+      it 'does not add request to saverequest queue' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out_OR, format: :json
+        SaveRequestJob.should have_queue_size_of(0)
+      end
+
+      it 'returns dragon overlay url' do
+        Request.any_instance.stub(:client).and_return client
+        post :create, request: zoomed_out_OR, format: :json
         expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
       end
     end
