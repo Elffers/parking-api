@@ -6,7 +6,7 @@ Parameters needed in :request key of parameters:
 
 * :coords - Latitude, Longitude coordinates using Geographic Coordinate System as string, e.g. "(47.609023, -122.33373610000001)"
 * :bounds - Southwest and Northeast cordners of bounding box formatted as string, e.g. "((Lat1, Long1), (Lat2, Long2))"
-* :size - width x height (in pixels) as string, e.g. "400,400"
+* :size - width x height (in pixels) as integers in a string, e.g. "400,400". The size of the image must be not be floats. Use "640,946", not "640.000,946.000".
 
 Information returned:
 * BSON id
