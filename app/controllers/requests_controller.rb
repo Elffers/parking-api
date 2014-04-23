@@ -39,21 +39,12 @@ class RequestsController < ApplicationController
       end
     elsif @request.in_seattle? && !@request.zoomed?
       ladiezzz = "https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png"
-      respond_to do |format|
-        format.html { render :index, notice: 'You are not in Seattle.' }
-        format.json { render json: ladiezzz, status: 400 }
-      end
+      error_response("Zoom in plz", ladiezzz, 400)
     elsif !@request.in_seattle?
       dragons = "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
-      respond_to do |format|
-        format.html { render :index, notice: 'You are not in Seattle.' }
-        format.json { render json: dragons, status: 418 }
-      end
+      error_response('Here be dragons', dragons, 418)
     else # unknown errors
-      respond_to do |format|
-        format.html { render :index, notice: 'PORBLEMS.' }
-        format.json { render json: "PORBLEMS", status: 400 }
-      end
+      error_response('PORBLEMS', 'PORBLEMS', 400)
     end
   end
 
@@ -76,5 +67,12 @@ class RequestsController < ApplicationController
 
   def find_request
     @request
+  end
+
+  def error_response(notice, json, status)
+    respond_to do |format|
+      format.html { render :index, notice: notice }
+      format.json { render json: json, status: status }
+    end
   end
 end
