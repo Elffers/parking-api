@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
   def create
     # Request.find_or_initialize_by
     @request = Request.new(request_params)
-    @request.set_client(request.user_agent)
+    @request.set_client(request.user_agent) unless @request.client
     @request.get_overlay
     if !@request.valid?
       respond_to do |format|

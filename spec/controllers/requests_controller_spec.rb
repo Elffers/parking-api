@@ -8,6 +8,14 @@ describe RequestsController do
                                 "size"=>"500,500",
                                 }
                               }
+   # iPhone
+  let(:iphone_geodata) { {
+                          "coords"=>"(47.6090198, -122.33356800000001)",
+                          "bounds"=>"((47.60540305873747, -122.3389324180298), (47.61263629117663, -122.32820358197023))",
+                          "size"=>"500,500",
+                          "client" => "Apple-iPhone4C1/1001.523"
+                          }
+                        }
   # Portland
   let(:portland) { {
                     "coords" => "(45.522691, -122.673044)",
@@ -36,19 +44,20 @@ describe RequestsController do
     before do
       ResqueSpec.reset!
       Request.any_instance.stub(:client).and_return client
-      # client.stub(:include?).with("Parking App")
     end
 
+    context 'from iPhone' do
+
+      it 'is successful' do
+        post :create, request: iphone_geodata, format: :json
+        expect(response.status).to eq 200
+      end
+
+    end
     context 'with valid bounds' do
       it 'is successful' do
         post :create, request: valid_client_geodata, format: :json
         expect(response.status).to eq 200
-      end
-
-      it 'sets the client' do
-        post :create, request: valid_client_geodata, format: :json
-        expect(assigns(:request)).to be_valid
-        expect(assigns(:request).client).to eq client
       end
 
       it 'gets overlay' do
