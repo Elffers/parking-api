@@ -8,7 +8,7 @@ describe RequestsController do
                                 "size"=>"500,500",
                                 }
                               }
-   # iPhone
+  # iPhone
   let(:iphone_geodata) { {
                           "coords"=>"(47.6090198, -122.33356800000001)",
                           "bounds"=>"((47.60540305873747, -122.3389324180298), (47.61263629117663, -122.32820358197023))",
@@ -44,6 +44,14 @@ describe RequestsController do
     before do
       ResqueSpec.reset!
       Request.any_instance.stub(:client).and_return client
+    end
+
+    context 'if request with same bounds already exists' do
+      it 'finds request from database' do
+      end
+
+      it 'returns map overlay successfully' do
+      end
     end
 
     context 'from iPhone' do
@@ -102,7 +110,7 @@ describe RequestsController do
       it 'shows ladiezzzz' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: zoomed_out, format: :json
-        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png"
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png'
       end
     end
 
@@ -119,7 +127,7 @@ describe RequestsController do
 
       it 'returns dragon overlay url' do
         post :create, request: portland, format: :json
-        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png'
       end
     end
 
@@ -136,7 +144,7 @@ describe RequestsController do
 
       it 'returns dragon overlay url' do
         post :create, request: zoomed_out_OR, format: :json
-        expect(response.body).to eq "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png"
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png'
       end
     end
   end

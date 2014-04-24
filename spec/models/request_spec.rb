@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Request do
 
   let(:partly_in){ {
-                    coords: "(47.7263275, -122.3520191)",
-                    bounds: "((47.71477902988729, -122.36918523769532), (47.7378734102129, -122.3348529623047))"
+                    coords: '(47.7263275, -122.3520191)',
+                    bounds: '((47.71477902988729, -122.36918523769532), (47.7378734102129, -122.3348529623047))'
                     }
                   }
 
   let(:fully_in){ {
-                    coords: "(47.67666029999999, -122.33759450000002)",
-                    bounds: "((47.66510082328286, -122.35476063769534), (47.68821721639755, -122.32042836230471))"
+                    coords: '(47.67666029999999, -122.33759450000002)',
+                    bounds: '((47.66510082328286, -122.35476063769534), (47.68821721639755, -122.32042836230471))'
                   }
                 }
 
@@ -26,19 +26,19 @@ describe Request do
                       }
                     }
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of(:coords) }
     it { should validate_presence_of(:bounds) }
     it { should validate_presence_of(:client) }
   end
 
-  describe '.get_overlay' do
+  describe '#get_overlay' do
     context 'for bounds fully contained in Seattle' do
-      let(:request){ Request.new(fully_in)}
+      let(:request){ Request.new(fully_in) }
       it 'should set the .query attribute' do
         request.get_overlay
         expect(request.query).to_not be_nil
-        expect(request.query).to eq "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.35476063769534%2C47.66510082328286%2C-122.32042836230471%2C47.68821721639755&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=2926&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true"
+        expect(request.query).to eq "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.35476063769534%2C47.66510082328286%2C-122.32042836230471%2C47.68821721639755&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=3857&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true"
       end
 
       it 'should point to temp file as overlay.url' do
@@ -49,12 +49,12 @@ describe Request do
     end
 
     context 'for bounds partly contained in Seattle' do
-      let(:request){ Request.new(partly_in)}
+      let(:request){ Request.new(partly_in) }
 
       it 'should set the .query attribute' do
         request.get_overlay
         expect(request.query).to_not be_nil
-        expect(request.query).to eq "http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.36918523769532%2C47.71477902988729%2C-122.3348529623047%2C47.7378734102129&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=2926&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true"
+        expect(request.query).to eq 'http://gisrevprxy.seattle.gov/ArcGIS/rest/services/SDOT_EXT/sdot_parking/MapServer/export?bbox=-122.36918523769532%2C47.71477902988729%2C-122.3348529623047%2C47.7378734102129&bboxSR=4326&dpi=96&f=image&format=png8&imageSR=3857&layers=show%3A7%2C6%2C8%2C9&size=&transparent=true'
       end
 
       it 'should point to temp file as overlay.url' do
@@ -89,6 +89,27 @@ describe Request do
       request = Request.new(zoomed_out)
       expect(request.zoomed?).to eq false
     end
+  end
 
+  describe '#save_queue' do
+    context 'for valid request' do
+      let(:request) { Request.new(fully_in) }
+      before do
+        request.client = "Chrome"
+        request.get_overlay
+        ResqueSpec.reset!
+      end
+
+      # coords, bounds, size, client, version, query
+      it 'removes the id from parameters' do
+        request.queue_save
+        expect(request.attributes).to_not include '_id'
+      end
+
+      it 'adds a job to the queue' do
+        request.queue_save
+        SaveRequestJob.should have_queue_size_of(1)
+      end
+    end
   end
 end
