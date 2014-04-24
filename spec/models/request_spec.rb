@@ -92,16 +92,24 @@ describe Request do
   end
 
   describe '#save_queue' do
-    let(:request) { Request.new(fully_in) }
-    before do
-      request.client = "Chrome"
-      request.get_overlay
-    end
+    context 'for valid request' do
+      let(:request) { Request.new(fully_in) }
+      before do
+        request.client = "Chrome"
+        request.get_overlay
+        ResqueSpec.reset!
+      end
 
-    it 'removes the id from parameters' do
-      request.queue_save
-      expect(request.attributes).to_not include '_id'
-    end
+      # coords, bounds, size, client, version, query
+      it 'removes the id from parameters' do
+        request.queue_save
+        expect(request.attributes).to_not include '_id'
+      end
 
+      it 'adds a job to the queue' do
+        request.queue_save
+        SaveRequestJob.should have_queue_size_of(1)
+      end
+    end
   end
 end
