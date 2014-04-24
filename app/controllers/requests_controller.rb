@@ -29,10 +29,10 @@ class RequestsController < ApplicationController
         format.json { render json: @request, status: 200 }
       end
     elsif @request.in_seattle? && !@request.zoomed?
-      ladies = 'https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png'
+      ladies = @request.get_ladies
       error_response("Zoom in plz", ladies, 400)
     elsif !@request.in_seattle?
-      dragons = 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png'
+      dragons = @request.get_dragons
       error_response('Here be dragons', dragons, 418)
     else # unknown errors
       error_response('PORBLEMS', 'PORBLEMS', 400)

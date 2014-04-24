@@ -90,4 +90,14 @@ class Request
     self.attributes.delete "_id"
     Resque.enqueue(SaveRequestJob, attributes)
   end
+
+  def get_dragons
+    mapsize = size.sub(/,/, 'x')
+    "https://s3-us-west-2.amazonaws.com/seattle-parking/dragons/#{mapsize}.png"
+  end
+
+  def get_ladies
+    mapsize = size.sub(/,/, 'x')
+    "https://s3-us-west-2.amazonaws.com/seattle-parking/ladies/#{mapsize}.png"
+  end
 end

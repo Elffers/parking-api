@@ -25,12 +25,12 @@ describe RequestsController do
                   }
 
   # Seattle zoomed out
-  let(:zoomed_out){ {
+  let(:zoomed_out)  { {
                       "coords" => "(47.62862941481989, -122.39090529990231)",
                       "bounds" => "((47.5823335998115, -122.45956985068358), (47.674884258347305, -122.32224074912108))",
                       "size"=>"500,500",
+                      }
                     }
-                  }
 
   let(:zoomed_out_OR) { {
                         "coords" => "(45.5234515, -122.6762071)",
@@ -38,6 +38,18 @@ describe RequestsController do
                         "size"=>"500,500",
                         }
                       }
+
+  let(:ladies_300_300) {{
+                          "coords" => "(47.62862941481989, -122.39090529990231)",
+                          "bounds" => "((47.594473527154285, -122.37331546816404), (47.66388577432711, -122.27031864199216))",
+                          "size"=>"300,300",
+                        }}
+  let(:dragons_300_300) {{
+                          "coords" => "(45.5234515, -122.6762071)",
+                          "bounds" => "((41.84263555963682, -87.62782409416502), (41.86181532303402, -87.60207488762205))",
+                          "size"=>"300,300",
+                        }}
+
   describe 'POST create' do
     let(:client){ double("Client") }
 
@@ -47,10 +59,10 @@ describe RequestsController do
     end
 
     context 'if request with same bounds already exists' do
-      it 'finds request from database' do
+      xit 'finds request from database' do
       end
 
-      it 'returns map overlay successfully' do
+      xit 'returns map overlay successfully' do
       end
     end
 
@@ -110,7 +122,12 @@ describe RequestsController do
       it 'shows ladiezzzz' do
         Request.any_instance.stub(:client).and_return client
         post :create, request: zoomed_out, format: :json
-        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/ladies.png'
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/ladies/500x500.png'
+      end
+
+      it 'returns the correct overlay size' do
+        post :create, request: ladies_300_300, format: :json
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/ladies/300x300.png'
       end
     end
 
@@ -127,7 +144,12 @@ describe RequestsController do
 
       it 'returns dragon overlay url' do
         post :create, request: portland, format: :json
-        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png'
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons/500x500.png'
+      end
+
+      it 'returns the correct overlay size' do
+        post :create, request: dragons_300_300, format: :json
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons/300x300.png'
       end
     end
 
@@ -144,8 +166,9 @@ describe RequestsController do
 
       it 'returns dragon overlay url' do
         post :create, request: zoomed_out_OR, format: :json
-        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons.png'
+        expect(response.body).to eq 'https://s3-us-west-2.amazonaws.com/seattle-parking/dragons/500x500.png'
       end
     end
+
   end
 end
