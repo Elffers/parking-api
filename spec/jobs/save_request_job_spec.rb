@@ -45,8 +45,9 @@ describe SaveRequestJob do
   end
 
   describe 'with valid requests' do
+    # need to stub this.
     it 'saves the request' do
-      p valid1.attributes
+      expect { SaveRequestJob.perform(valid1.attributes) }.to change(Request, :count).by(1)
     end
   end
 
