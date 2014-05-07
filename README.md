@@ -13,7 +13,7 @@ Information returned:
 * bounding box (:bounds)
 * web/mobile client (:client and :version)
 * coordinates of request (:coords)
-* map overlay URL (stored in S2 bucket)
+* map overlay URL (stored in S3 bucket)
 * Seattle ArcGIS map URL (:query)
 
 Example:
